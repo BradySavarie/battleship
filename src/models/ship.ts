@@ -1,10 +1,12 @@
 export class Ship {
     constructor(
         readonly length: number,
+        readonly name: string,
         public hits: number = 0,
         public orientation: string = 'horizontal'
     ) {
         this.length = length;
+        this.name = name;
         this.hits = hits;
         this.orientation = orientation;
     }

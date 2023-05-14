@@ -1,4 +1,5 @@
-/* This module is used to create player objects that conform to the specified isPlayer interface */
+/* This module defines a class called Human that implements the Player interface. The Human class has properties for a game board (Gameboard) and an array of ships (Ship[]), and it includes a method to initialize the ships. */
+
 import { Ship } from './ship';
 import { Gameboard } from './board';
 
@@ -17,19 +18,20 @@ export class Human implements Player {
     }
 
     initializeShips(): void {
-        const carrier = new Ship(5);
-        const battleship = new Ship(4);
-        const cruiser = new Ship(3);
-        const submarine = new Ship(3);
-        const destroyer = new Ship(2);
+        const shipsData: { length: number; name: string }[] = [
+            { length: 5, name: 'Carrier' },
+            { length: 4, name: 'Battleship' },
+            { length: 3, name: 'Cruiser' },
+            { length: 3, name: 'Submarine' },
+            { length: 2, name: 'Destroyer' },
+        ];
 
-        this.ships.push(carrier);
-        this.ships.push(battleship);
-        this.ships.push(cruiser);
-        this.ships.push(submarine);
-        this.ships.push(destroyer);
+        for (let data of shipsData) {
+            let ship = new Ship(data.length, data.name);
+            this.ships.push(ship);
+        }
     }
 }
 
 const player = new Human();
-console.log(player.board.shipPositions[0]);
+console.log(player);
