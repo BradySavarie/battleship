@@ -3,11 +3,11 @@
 import { Ship } from './ship';
 
 export class Gameboard {
-    private board: Object;
-    private attackState: Object;
+    public shipPositions: (null | number)[][];
+    public attackState: Object;
 
-    constructor(public boardSize: number = 10) {
-        this.board = new Array(boardSize)
+    constructor(readonly boardSize: number = 10) {
+        this.shipPositions = new Array(boardSize)
             .fill(false)
             .map(() => new Array(boardSize).fill(null));
         this.attackState = new Array(boardSize)
