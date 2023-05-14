@@ -18,10 +18,7 @@ export class Ship {
     }
 
     changeOrientation() {
-        if (this.orientation === 'horizontal') {
-            this.orientation = 'vertical';
-        } else {
-            this.orientation = 'horizontal';
-        }
+        this.orientation =
+            this.orientation === 'horizontal' ? 'vertical' : 'horizontal';
     }
 }
