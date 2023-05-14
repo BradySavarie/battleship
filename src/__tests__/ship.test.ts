@@ -1,6 +1,6 @@
 import { Ship } from '../models/ship';
 
-describe('test hits method', () => {
+describe('tests hits method', () => {
     it('increments hits by 1', () => {
         let battleship = new Ship(4);
         battleship.hit();
@@ -8,11 +8,28 @@ describe('test hits method', () => {
     });
 });
 
-describe('check if ship is sunk', () => {
-    it('Sinks ship and tests isSunk for accuracy', () => {
+describe('tests isSunk method', () => {
+    it('Sinks ship and tests return value', () => {
         let patrolBoat = new Ship(2);
         patrolBoat.hit();
         patrolBoat.hit();
         expect(patrolBoat.isSunk()).toBe(true);
+    });
+});
+
+describe('tests changeOrientation method', () => {
+    it('Changes orientation to vertical', () => {
+        let patrolBoat = new Ship(2);
+        patrolBoat.changeOrientation();
+        expect(patrolBoat.orientation).toBe('vertical');
+    });
+});
+
+describe('tests changeOrientation method', () => {
+    it('Changes orientation back to horizontal', () => {
+        let patrolBoat = new Ship(2);
+        patrolBoat.changeOrientation();
+        patrolBoat.changeOrientation();
+        expect(patrolBoat.orientation).toBe('horizontal');
     });
 });
