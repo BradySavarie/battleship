@@ -14,11 +14,7 @@ export class Ship {
     }
 
     isSunk() {
-        if (this.hits >= this.length) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.hits >= this.length ? true : false;
     }
 
     changeOrientation() {
