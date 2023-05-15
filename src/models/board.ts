@@ -1,10 +1,10 @@
-/* Represents the game board, including the positions of ships and the state of each cell (hit, miss, or empty). */
+/* This module defines a Gameboard class that represents a game board for battleships. It has properties for ship positions and attack state, and includes a method to place a ship on the board. */
 
 import { Ship } from './ship';
 
 export class Gameboard {
     public shipPositions: (null | number)[][];
-    public attackState: Object;
+    public attackState: (null | number)[][];
 
     constructor(readonly boardSize: number = 10) {
         this.shipPositions = new Array(boardSize)

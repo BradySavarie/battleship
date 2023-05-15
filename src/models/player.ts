@@ -6,7 +6,6 @@ import { Gameboard } from './board';
 interface Player {
     board: Gameboard;
     ships: Ship[];
-    initializeShips(): void;
 }
 
 export class Human implements Player {
@@ -17,7 +16,7 @@ export class Human implements Player {
         this.initializeShips();
     }
 
-    initializeShips(): void {
+    private initializeShips() {
         const shipsData: { length: number; name: string }[] = [
             { length: 5, name: 'Carrier' },
             { length: 4, name: 'Battleship' },
@@ -32,6 +31,3 @@ export class Human implements Player {
         }
     }
 }
-
-const player = new Human();
-console.log(player);
