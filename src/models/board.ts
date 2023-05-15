@@ -20,5 +20,6 @@ export class Gameboard {
         // Does a ship already exist at this coordinate?
         if (this.shipPositions[row][col] !== null) return false;
         // Is the ship too long to fit at this coordinate?
+        return true;
     }
 }
