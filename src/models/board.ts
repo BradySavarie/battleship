@@ -16,9 +16,9 @@ export class Gameboard {
     }
 
     placeShip(ship: Ship, coordinatePair: number[]) {
-        let [xPos, yPos] = coordinatePair;
-        // Is the ship too long to fit at this coordinate?
-
+        let [row, col] = coordinatePair;
         // Does a ship already exist at this coordinate?
+        if (this.shipPositions[row][col] !== null) return false;
+        // Is the ship too long to fit at this coordinate?
     }
 }

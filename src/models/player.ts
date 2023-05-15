@@ -1,4 +1,4 @@
-/* This module defines a class called Human that implements the Player interface. The Human class has properties for a game board (Gameboard) and an array of ships (Ship[]), and it includes a method to initialize the ships. */
+/* This module defines a class called Human that implements the Player interface. The Human class has properties for a game board (Gameboard) and an array of ships (Ship[]). */
 
 import { Ship } from './ship';
 import { Gameboard } from './board';
