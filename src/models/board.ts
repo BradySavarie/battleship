@@ -19,12 +19,12 @@ export class Gameboard {
         let [row, col] = coordinatePair;
         // Does a ship exist at the target or any secondary coordinates?
         if (ship.orientation === 'horizontal') {
-            for (let i = col; i < ship.length; i++) {
-                if (this.shipPositions[row][i] !== null) return false;
+            for (let i = 0; i < ship.length; i++) {
+                if (this.shipPositions[row][col + i] !== null) return false;
             }
         } else if (ship.orientation === 'vertical') {
-            for (let i = row; i < ship.length; i++) {
-                if (this.shipPositions[i][col] !== null) return false;
+            for (let i = 0; i < ship.length; i++) {
+                if (this.shipPositions[row + i][col] !== null) return false;
             }
         }
         // Is the ship too long to fit at this coordinate?
