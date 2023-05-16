@@ -1,20 +1,19 @@
 import { Gameboard } from '../models/board';
 import { Human } from '../models/player';
 
-describe('tests placeShips method', () => {
-    it('Checks if the specified coordinate is empty', () => {
-        let testPlayer = new Human();
-        expect(testPlayer.board.placeShip(testPlayer.ships[0], [5, 5])).toBe(
-            true
-        );
-    });
-});
+let testPlayer = new Human();
+let testCoordinate = [0, 0];
 
 describe('tests placeShips method', () => {
-    it('Checks if the specified coordinate contains a ship', () => {
-        let testPlayer = new Human();
-        testPlayer.board.shipPositions[5][5] = 1;
-        expect(testPlayer.board.placeShip(testPlayer.ships[0], [5, 5])).toBe(
+    it('Checks if horizontally placed ship is recognized at all positions', () => {
+        // Manually insert a test ship of length 5 horizontally
+        for (let i = 0; i < testPlayer.ships[0].length; i++) {
+            testPlayer.board.shipPositions[0][i] = 1;
+        }
+        expect(testPlayer.board.placeShip(testPlayer.ships[0], [0, 0])).toBe(
+            false
+        );
+        expect(testPlayer.board.placeShip(testPlayer.ships[0], [0, 4])).toBe(
             false
         );
     });
