@@ -16,8 +16,9 @@ export class Gameboard {
     }
 
     placeShip(ship: Ship, coordinatePair: number[]) {
-        let [row, col] = coordinatePair;
-        // Does a ship exist at the target or any secondary coordinates?
+        const [row, col] = coordinatePair;
+
+        // Will the ship collide with another ship?
         if (ship.orientation === 'horizontal') {
             for (let i = 0; i < ship.length; i++) {
                 if (this.shipPositions[row][col + i] !== null) return false;
@@ -27,7 +28,13 @@ export class Gameboard {
                 if (this.shipPositions[row + i][col] !== null) return false;
             }
         }
-        // Is the ship too long to fit at this coordinate?
+        // Will the ship extend past the edge of the board?
+        if (ship.orientation === 'horizontal') {
+            if (this.boardSize - ship.length > col + 1) return false;
+        } else if (ship.orientation === 'vertical') {
+            if (this.boardSize - ship.length > row + 1) return false;
+        }
+        // insert ships index number into each valid coordinate
         return true;
     }
 }
