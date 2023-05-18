@@ -15,26 +15,42 @@ export class Gameboard {
             .map(() => new Array(boardSize).fill(null));
     }
 
-    placeShip(ship: Ship, coordinatePair: number[]) {
+    placeShip(ship: Ship, coordinatePair: number[]): boolean {
         const [row, col] = coordinatePair;
 
+        let isValid = this.validatePlacement(ship, row, col);
+        if (!isValid) return false;
+        // insert ships index number into each valid coordinate
+        return true;
+    }
+
+    private validatePlacement(ship: Ship, row: number, col: number): boolean {
         // Will the ship collide with another ship?
         if (ship.orientation === 'horizontal') {
             for (let i = 0; i < ship.length; i++) {
-                if (this.shipPositions[row][col + i] !== null) return false;
+                if (
+                    col + i > this.boardSize - 1 ||
+                    this.shipPositions[row][col + i] !== null
+                )
+                    return false;
             }
         } else if (ship.orientation === 'vertical') {
             for (let i = 0; i < ship.length; i++) {
-                if (this.shipPositions[row + i][col] !== null) return false;
+                if (
+                    row + i > this.boardSize - 1 ||
+                    this.shipPositions[row + i][col] !== null
+                )
+                    return false;
             }
         }
+
         // Will the ship extend past the edge of the board?
         if (ship.orientation === 'horizontal') {
-            if (this.boardSize - ship.length > col + 1) return false;
+            if (col + ship.length > this.boardSize) return false;
         } else if (ship.orientation === 'vertical') {
-            if (this.boardSize - ship.length > row + 1) return false;
+            if (row + ship.length > this.boardSize) return false;
         }
-        // insert ships index number into each valid coordinate
+
         return true;
     }
 }
