@@ -1,1 +1,1 @@
-console.log('hello');
+import { Human } from './models/player';
