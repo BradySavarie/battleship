@@ -6,6 +6,11 @@ import { Gameboard } from './board';
 interface Player {
     board: Gameboard;
     ships: Ship[];
+    takeTurn(coordinate: number[]): void;
+}
+
+interface ComputerPlayer extends Player {
+    takeTurn(): void;
 }
 
 export class Human implements Player {
@@ -30,4 +35,32 @@ export class Human implements Player {
             this.ships.push(ship);
         }
     }
+
+    takeTurn(coordinate: number[]) {}
+}
+
+export class Computer implements ComputerPlayer {
+    board: Gameboard = new Gameboard();
+    ships: Ship[] = [];
+
+    constructor() {
+        this.initializeShips();
+    }
+
+    private initializeShips() {
+        const shipsData: { length: number; name: string }[] = [
+            { length: 5, name: 'Carrier' },
+            { length: 4, name: 'Battleship' },
+            { length: 3, name: 'Cruiser' },
+            { length: 3, name: 'Submarine' },
+            { length: 2, name: 'Destroyer' },
+        ];
+
+        for (let data of shipsData) {
+            let ship = new Ship(data.length, data.name);
+            this.ships.push(ship);
+        }
+    }
+
+    takeTurn() {}
 }
