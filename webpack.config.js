@@ -12,6 +12,10 @@ module.exports = {
                 use: 'ts-loader',
                 include: [path.resolve(__dirname, 'src')],
             },
+            {
+                test: /\.s[ac]ss$/i,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
         ],
     },
     output: {
