@@ -8,6 +8,21 @@
         <script src="./main.js" defer></script>
     </head>
     <body>
-        <h1>Test</h1>
+        <h1 class="game_title">Battleship</h1>
+        <h2 class="instructions_header" id="instructions_header">
+            Drag & Drop Your Ships into Position
+        </h2>
+
+        <button id="ship_orientation_btn">Ship Orientation</button>
+
+        <div class="human_game_board" id="human_game_board">
+            <!-- Dynamically render the game board here -->
+        </div>
+
+        <div class="unplaced_ships_container" id="unplaced_ships_container">
+            <!-- Dynamically render unplaced ships here -->
+        </div>
+
+        <button id="start_game_btn">Start Game</button>
     </body>
 </html>

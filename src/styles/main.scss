@@ -1,7 +1,17 @@
+@import url('./placeShips.scss');
+
 body {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1 {
-    color: red;
+.game_title {
+    text-align: center;
+}
+
+.instructions_header {
+    outline: 1px solid black;
+    text-align: center;
+    padding: 1rem;
 }
