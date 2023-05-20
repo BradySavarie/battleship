@@ -3,10 +3,10 @@ import { Human, Computer } from './player';
 
 let activePlayer: Human | Computer;
 
-function setActivePlayer(player: Human | Computer) {
+export function setActivePlayer(player: Human | Computer) {
     activePlayer = player;
 }
 
-function getActivePlayer(): Human | Computer {
+export function getActivePlayer(): Human | Computer {
     return activePlayer;
 }
