@@ -1,5 +1,6 @@
-.instructions_header {
+.board {
+    height: 250px;
+    width: 250px;
     outline: 1px solid black;
-    text-align: center;
-    padding: 1rem;
+    display: grid;
 }
