@@ -1,6 +1,17 @@
+$boardsize: 250px;
+
 .board {
-    height: 250px;
-    width: 250px;
+    height: $boardsize;
+    width: $boardsize;
     outline: 1px solid black;
     display: grid;
+}
+
+.shipGrid .cell {
+    width: calc($boardsize / 10);
+    height: calc($boardsize / 10);
+}
+
+.cell {
+    outline: 1px solid black;
 }
