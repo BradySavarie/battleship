@@ -35,6 +35,7 @@ export function renderShips(ships: Ship[]) {
             blockShip.appendChild(cell);
         }
 
+        container.classList.add('ship_container');
         shipName.textContent = `${ship.name}`;
         shipName.classList.add('ship_name');
         blockShip.classList.add('block_ship', 'draggable');

@@ -1,11 +1,33 @@
 $boardsize: 50vmin;
 
 .place_ships_screen_container {
+    height: 100vh;
+    width: 100vw;
     display: flex;
-    flex-grow: 1;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 75px;
+    gap: calc(($boardsize / 10) / 2);
+}
+
+.header {
+    width: 55vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main_content {
+    width: 55vw;
+    height: 55vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.game_board_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .board {
@@ -14,10 +36,36 @@ $boardsize: 50vmin;
     display: grid;
 }
 
+.placement_controls_container {
+    width: $boardsize;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.place_ships_instructions_container {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 5px;
+}
+
 .unplaced_ships_container {
     display: flex;
     flex-direction: column;
-    height: $boardsize;
+    width: $boardsize;
+    gap: calc(($boardsize / 10) / 3);
+}
+
+.placement_controls_buttons_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ship_container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .ship_name {
@@ -32,12 +80,12 @@ $boardsize: 50vmin;
 .block_ship .cell {
     width: calc($boardsize / 10);
     height: calc($boardsize / 10);
-    background-color: gray;
+    background-color: #ff5500;
 }
 
 .cell {
-    background-color: hsl(200, 100%, 50%);
-    border: 1px solid hsla(0, 0%, 100%, 0.4);
+    background-color: #00aaff;
+    border: 1px solid hsla(0, 0%, 100%, 1);
 }
 
 .draggable {
