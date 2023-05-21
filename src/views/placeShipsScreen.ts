@@ -21,29 +21,26 @@ export function renderGameboard(size: number) {
 }
 
 export function renderShips(ships: Ship[]) {
-    // for each ship
     ships.forEach((ship) => {
         let container = document.createElement('div');
         let name = document.createElement('p');
-        let shipGrid = document.createElement('div');
-        shipGrid.classList.add('shipGrid');
-        shipGrid.style.display = 'flex';
-        shipGrid.style.flexDirection = 'row';
-        name.textContent = `${ship.name}`;
-
-        for (let i = 0; i < ship.length; i++) {
-            let cell = document.createElement('div');
-            cell.classList.add('cell');
-            shipGrid.appendChild(cell);
-        }
-
-        container.appendChild(name);
-        container.appendChild(shipGrid);
-
+        let blockShip = document.createElement('div');
         let unplaced_ships_container = document.getElementById(
             'unplaced_ships_container'
         ) as HTMLDivElement;
 
+        for (let i = 0; i < ship.length; i++) {
+            let cell = document.createElement('div');
+            cell.classList.add('cell');
+            blockShip.appendChild(cell);
+        }
+
+        name.textContent = `${ship.name}`;
+        blockShip.classList.add('blockShip', 'draggable');
+        blockShip.setAttribute('draggable', 'true');
+
+        container.appendChild(name);
+        container.appendChild(blockShip);
         unplaced_ships_container.appendChild(container);
     });
 }

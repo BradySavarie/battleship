@@ -1,4 +1,13 @@
-$boardsize: 250px;
+$boardsize: 300px;
+
+.place_ships_screen_container {
+    display: flex;
+    flex-grow: 1;
+    outline: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    gap: 75px;
+}
 
 .board {
     height: $boardsize;
@@ -7,11 +16,20 @@ $boardsize: 250px;
     display: grid;
 }
 
-.shipGrid .cell {
+.blockShip {
+    display: flex;
+}
+
+.blockShip .cell {
     width: calc($boardsize / 10);
     height: calc($boardsize / 10);
+    background-color: gray;
 }
 
 .cell {
     outline: 1px solid black;
+}
+
+.draggable {
+    cursor: move;
 }
