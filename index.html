@@ -8,19 +8,37 @@
         <script src="./main.js" defer></script>
     </head>
     <body>
-        <h1 class="game_title">Battleship</h1>
-        <h2 class="instructions_header" id="instructions_header">
-            Drag & Drop Your Ships into Position
-        </h2>
+        <div
+            class="place_ships_screen_container"
+            id="place_ships_screen_container"
+        >
+            <header class="header">
+                <h1 class="game_title">Battleship</h1>
+                <button>New Game</button>
+            </header>
+            <main class="main_content">
+                <div class="game_board_container" id="game_board_container">
+                    <p>Your Gameboard</p>
+                    <!-- Dynamically render the game board here -->
+                </div>
 
-        <div class="place_ships_screen_container" id="place_screen_container">
-            <div class="game_board_container" id="game_board_container">
-                <!-- Dynamically render the game board here -->
-            </div>
-
-            <div class="unplaced_ships_container" id="unplaced_ships_container">
-                <!-- Dynamically render unplaced ships here -->
-            </div>
+                <div class="placement_controls_container">
+                    <div class="place_ships_instructions_container">
+                        <h2>Place Your Ships:</h2>
+                        <p>(Double-click to rotate once placed)</p>
+                    </div>
+                    <div
+                        class="unplaced_ships_container"
+                        id="unplaced_ships_container"
+                    >
+                        <!-- Dynamically render unplaced ships here -->
+                    </div>
+                    <div class="placement_controls_buttons_container">
+                        <button>Start Game</button>
+                        <button>Randomize</button>
+                    </div>
+                </div>
+            </main>
         </div>
     </body>
 </html>
