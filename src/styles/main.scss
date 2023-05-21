@@ -1,13 +1,17 @@
 @import 'placeShips.scss';
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    background-color: #f3f3f3;
+}
+
 body {
-    margin-block-start: 0;
-    margin-block-end: 0;
     display: flex;
     flex-direction: column;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     height: 100vh;
 }
 
@@ -23,7 +27,8 @@ body {
 }
 
 h1,
-h2 {
+h2,
+p {
     margin-block-start: 0;
     margin-block-end: 0;
 }

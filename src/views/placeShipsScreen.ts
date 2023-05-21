@@ -23,7 +23,7 @@ export function renderGameboard(size: number) {
 export function renderShips(ships: Ship[]) {
     ships.forEach((ship) => {
         let container = document.createElement('div');
-        let name = document.createElement('p');
+        let shipName = document.createElement('p');
         let blockShip = document.createElement('div');
         let unplaced_ships_container = document.getElementById(
             'unplaced_ships_container'
@@ -35,12 +35,13 @@ export function renderShips(ships: Ship[]) {
             blockShip.appendChild(cell);
         }
 
-        name.textContent = `${ship.name}`;
-        blockShip.classList.add('blockShip', 'draggable');
+        shipName.textContent = `${ship.name}`;
+        shipName.classList.add('ship_name');
+        blockShip.classList.add('block_ship', 'draggable');
         blockShip.setAttribute('draggable', 'true');
 
-        container.appendChild(name);
         container.appendChild(blockShip);
+        container.appendChild(shipName);
         unplaced_ships_container.appendChild(container);
     });
 }
