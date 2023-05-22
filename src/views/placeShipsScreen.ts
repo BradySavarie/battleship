@@ -50,3 +50,7 @@ export function renderShips(ships: Ship[]) {
         blockShipsContainer.appendChild(container);
     });
 }
+
+// Drag and Drop
+
+let empties = document.getElementsByClassName('empty');
