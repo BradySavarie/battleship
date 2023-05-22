@@ -2,6 +2,8 @@ $boardsize: 50vmin;
 $off-white: #f3f3f3;
 $orange: #ff5500;
 $blue: #00aaff;
+$green: #00ffaa;
+$red: #dc143c;
 
 @mixin flex-column($display: flex, $direction: column) {
     display: $display;
@@ -52,10 +54,6 @@ $blue: #00aaff;
     height: $boardsize;
     width: $boardsize;
     display: grid;
-
-    & .cell {
-        background-color: $blue;
-    }
 }
 
 .main__placement-controls {
@@ -104,6 +102,15 @@ $blue: #00aaff;
 
 .cell {
     border: 1px solid $off-white;
+    background-color: $blue;
+
+    &.placementValid {
+        background-color: $green;
+    }
+
+    &.placementInvalid {
+        background-color: $red;
+    }
 }
 
 .draggable {
@@ -112,8 +119,4 @@ $blue: #00aaff;
 
 .invisible {
     visibility: hidden;
-}
-
-.hold {
-    border: 2px solid black;
 }

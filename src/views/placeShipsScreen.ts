@@ -62,7 +62,7 @@ export function renderShips(ships: Ship[]) {
             }, 0);
         });
 
-        container.addEventListener('dragend', () => {
+        blockShip.addEventListener('dragend', () => {
             blockShip.classList.toggle('invisible');
         });
     });
@@ -70,4 +70,16 @@ export function renderShips(ships: Ship[]) {
 
 // DragnDrop
 
-let empties = document.getElementsByClassName('empty');
+let gameBoardContainer = document.getElementById(
+    'game-board-container'
+) as HTMLDivElement;
+
+gameBoardContainer.addEventListener('dragenter', (e) => {
+    const target = e.target as HTMLElement;
+    target.classList.toggle('placementValid');
+});
+
+gameBoardContainer.addEventListener('dragleave', (e) => {
+    const target = e.target as HTMLElement;
+    target.classList.toggle('placementValid');
+});
