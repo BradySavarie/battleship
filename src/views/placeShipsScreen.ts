@@ -7,10 +7,14 @@ export function renderGameboard(size: number) {
     gameBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     gameBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
-    for (let i = 0; i < size * size; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell', 'empty');
-        gameBoard.appendChild(cell);
+    for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell', 'empty');
+            cell.setAttribute('data-row', `${row}`);
+            cell.setAttribute('data-col', `${col}`);
+            gameBoard.appendChild(cell);
+        }
     }
 
     let gameBoardContainer = document.getElementById(
