@@ -1,10 +1,17 @@
 $boardsize: 50vmin;
+$off-white: #f3f3f3;
+$orange: #ff5500;
+$blue: #00aaff;
+
+@mixin flex-column($display: flex, $direction: column) {
+    display: $display;
+    flex-direction: $direction;
+}
 
 .place_ships_screen_container {
+    @include flex-column;
     height: 100vh;
     width: 100vw;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -13,16 +20,16 @@ $boardsize: 50vmin;
     width: 55vw;
     display: flex;
     justify-content: space-between;
+}
 
-    .new_game_btn {
-        background-color: #f3f3f3;
-        border: 2px solid #ff5500;
+.new_game_btn {
+    background-color: $off-white;
+    border: 2px solid $orange;
 
-        &:hover {
-            background-color: #ff5500;
-            color: #f3f3f3;
-            transform: scale(1);
-        }
+    &:hover {
+        background-color: $orange;
+        color: $off-white;
+        transform: scale(1);
     }
 }
 
@@ -35,9 +42,8 @@ $boardsize: 50vmin;
 }
 
 .game_board_container {
+    @include flex-column;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -47,28 +53,25 @@ $boardsize: 50vmin;
     display: grid;
 
     & .cell {
-        background-color: #00aaff;
+        background-color: $blue;
     }
 }
 
 .placement_controls_container {
+    @include flex-column;
     width: $boardsize;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
 }
 
 .place_ships_instructions_container {
-    display: flex;
-    flex-direction: column;
+    @include flex-column;
     align-items: end;
     gap: 5px;
 }
 
 .unplaced_ships_container {
-    display: flex;
-    flex-direction: column;
+    @include flex-column;
     width: $boardsize;
     gap: calc(($boardsize / 10) / 3);
 }
@@ -88,7 +91,7 @@ $boardsize: 50vmin;
         & .cell {
             width: calc($boardsize / 10);
             height: calc($boardsize / 10);
-            background-color: #ff5500;
+            background-color: $orange;
         }
     }
 }
@@ -99,7 +102,7 @@ $boardsize: 50vmin;
 }
 
 .cell {
-    border: 1px solid hsla(0, 0%, 100%, 1);
+    border: 1px solid $off-white;
 }
 
 .draggable {
