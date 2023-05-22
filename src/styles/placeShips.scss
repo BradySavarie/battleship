@@ -109,3 +109,11 @@ $blue: #00aaff;
 .draggable {
     cursor: move;
 }
+
+.invisible {
+    visibility: hidden;
+}
+
+.hold {
+    border: 2px solid black;
+}

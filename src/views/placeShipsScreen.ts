@@ -1,5 +1,7 @@
 import { Ship } from '../models/ship';
 
+// Rendering Functions
+
 export function renderGameboard(size: number) {
     const gameBoard = document.createElement('div');
     gameBoard.classList.add('game-board-container__game-board');
@@ -26,6 +28,7 @@ export function renderGameboard(size: number) {
 
 export function renderShips(ships: Ship[]) {
     ships.forEach((ship) => {
+        // Create Elements
         let container = document.createElement('div');
         let shipName = document.createElement('p');
         let blockShip = document.createElement('div');
@@ -33,24 +36,38 @@ export function renderShips(ships: Ship[]) {
             'placement-controls__block-ships'
         ) as HTMLDivElement;
 
+        // Generate Cells
         for (let i = 0; i < ship.length; i++) {
             let cell = document.createElement('div');
             cell.classList.add('cell');
             blockShip.appendChild(cell);
         }
 
+        // Add default classes and attributes, populate ship name
         container.classList.add('block-ships__container');
-        shipName.textContent = `${ship.name}`;
         shipName.classList.add('block-ships__name');
+        shipName.textContent = `${ship.name}`;
         blockShip.classList.add('block-ships__ship', 'draggable');
         blockShip.setAttribute('draggable', 'true');
 
+        // Append Elements
         container.appendChild(blockShip);
         container.appendChild(shipName);
         blockShipsContainer.appendChild(container);
+
+        // Add DragnDrop Listeners
+        blockShip.addEventListener('dragstart', () => {
+            setTimeout(() => {
+                blockShip.classList.toggle('invisible');
+            }, 0);
+        });
+
+        container.addEventListener('dragend', () => {
+            blockShip.classList.toggle('invisible');
+        });
     });
 }
 
-// Drag and Drop
+// DragnDrop
 
 let empties = document.getElementsByClassName('empty');
