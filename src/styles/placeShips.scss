@@ -8,21 +8,22 @@ $blue: #00aaff;
     flex-direction: $direction;
 }
 
-.place_ships_screen_container {
+.content-container {
     @include flex-column;
     height: 100vh;
     width: 100vw;
     justify-content: center;
     align-items: center;
+    gap: calc(($boardsize / 10) / 2);
 }
 
-.header {
+.content-container__header {
     width: 55vw;
     display: flex;
     justify-content: space-between;
 }
 
-.new_game_btn {
+.header__new-game-btn {
     background-color: $off-white;
     border: 2px solid $orange;
 
@@ -33,7 +34,7 @@ $blue: #00aaff;
     }
 }
 
-.main_content {
+.content-container__main {
     width: 55vw;
     height: 55vh;
     display: flex;
@@ -41,13 +42,13 @@ $blue: #00aaff;
     gap: calc(($boardsize / 10) / 2);
 }
 
-.game_board_container {
+.main__game-board-container {
     @include flex-column;
     height: 100%;
     justify-content: space-between;
 }
 
-.board {
+.game-board-container__game-board {
     height: $boardsize;
     width: $boardsize;
     display: grid;
@@ -57,35 +58,35 @@ $blue: #00aaff;
     }
 }
 
-.placement_controls_container {
+.main__placement-controls {
     @include flex-column;
     width: $boardsize;
-    height: 100%;
+    max-height: calc($boardsize + 2rem);
     justify-content: space-between;
 }
 
-.place_ships_instructions_container {
+.placement-controls__instructions {
     @include flex-column;
     align-items: end;
     gap: 5px;
 }
 
-.unplaced_ships_container {
+.placement-controls__block-ships {
     @include flex-column;
     width: $boardsize;
     gap: calc(($boardsize / 10) / 3);
 }
 
-.ship_container {
+.block-ships__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .ship_name {
+    .block-ships__name {
         font-style: italic;
     }
 
-    .block_ship {
+    .block-ships__ship {
         display: flex;
 
         & .cell {
@@ -96,7 +97,7 @@ $blue: #00aaff;
     }
 }
 
-.placement_controls_buttons_container {
+.placement-controls__buttons {
     display: flex;
     justify-content: space-between;
 }

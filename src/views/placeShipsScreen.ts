@@ -1,23 +1,23 @@
 import { Ship } from '../models/ship';
 
 export function renderGameboard(size: number) {
-    const board = document.createElement('div');
-    board.classList.add('board');
+    const game_board = document.createElement('div');
+    game_board.classList.add('game-board-container__game-board');
 
-    board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-    board.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+    game_board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    game_board.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
     for (let i = 0; i < size * size; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
-        board.appendChild(cell);
+        game_board.appendChild(cell);
     }
 
     let game_board_container = document.getElementById(
-        'game_board_container'
+        'game-board-container'
     ) as HTMLDivElement;
 
-    game_board_container.appendChild(board);
+    game_board_container.appendChild(game_board);
 }
 
 export function renderShips(ships: Ship[]) {
@@ -25,8 +25,8 @@ export function renderShips(ships: Ship[]) {
         let container = document.createElement('div');
         let shipName = document.createElement('p');
         let blockShip = document.createElement('div');
-        let unplaced_ships_container = document.getElementById(
-            'unplaced_ships_container'
+        let blockShipsContainer = document.getElementById(
+            'placement-controls__block-ships'
         ) as HTMLDivElement;
 
         for (let i = 0; i < ship.length; i++) {
@@ -35,14 +35,14 @@ export function renderShips(ships: Ship[]) {
             blockShip.appendChild(cell);
         }
 
-        container.classList.add('ship_container');
+        container.classList.add('block-ships__container');
         shipName.textContent = `${ship.name}`;
-        shipName.classList.add('ship_name');
-        blockShip.classList.add('block_ship', 'draggable');
+        shipName.classList.add('block-ships__name');
+        blockShip.classList.add('block-ships__ship', 'draggable');
         blockShip.setAttribute('draggable', 'true');
 
         container.appendChild(blockShip);
         container.appendChild(shipName);
-        unplaced_ships_container.appendChild(container);
+        blockShipsContainer.appendChild(container);
     });
 }
