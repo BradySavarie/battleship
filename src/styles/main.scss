@@ -21,4 +21,17 @@ body {
 
 button {
     font-family: inherit;
+    font-weight: 500;
+    border: none;
+    background-color: hsla(20, 100%, 50%, 0.5);
+    color: black;
+    border-radius: 5px;
+    height: max-content;
+    padding: 4px 16px;
+
+    &:hover {
+        background-color: hsla(20, 100%, 50%, 0.8);
+        transform: scale(1.1);
+        cursor: pointer;
+    }
 }

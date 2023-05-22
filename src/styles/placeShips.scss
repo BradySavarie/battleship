@@ -7,13 +7,23 @@ $boardsize: 50vmin;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: calc(($boardsize / 10) / 2);
 }
 
 .header {
     width: 55vw;
     display: flex;
     justify-content: space-between;
+
+    .new_game_btn {
+        background-color: #f3f3f3;
+        border: 2px solid #ff5500;
+
+        &:hover {
+            background-color: #ff5500;
+            color: #f3f3f3;
+            transform: scale(1);
+        }
+    }
 }
 
 .main_content {
@@ -21,6 +31,7 @@ $boardsize: 50vmin;
     height: 55vh;
     display: flex;
     justify-content: space-between;
+    gap: calc(($boardsize / 10) / 2);
 }
 
 .game_board_container {
@@ -34,6 +45,10 @@ $boardsize: 50vmin;
     height: $boardsize;
     width: $boardsize;
     display: grid;
+
+    & .cell {
+        background-color: #00aaff;
+    }
 }
 
 .placement_controls_container {
@@ -58,33 +73,32 @@ $boardsize: 50vmin;
     gap: calc(($boardsize / 10) / 3);
 }
 
+.ship_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .ship_name {
+        font-style: italic;
+    }
+
+    .block_ship {
+        display: flex;
+
+        & .cell {
+            width: calc($boardsize / 10);
+            height: calc($boardsize / 10);
+            background-color: #ff5500;
+        }
+    }
+}
+
 .placement_controls_buttons_container {
     display: flex;
     justify-content: space-between;
 }
 
-.ship_container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.ship_name {
-    height: calc($boardsize / 10);
-    line-height: calc($boardsize / 10);
-}
-
-.block_ship {
-    display: flex;
-}
-
-.block_ship .cell {
-    width: calc($boardsize / 10);
-    height: calc($boardsize / 10);
-    background-color: #ff5500;
-}
-
 .cell {
-    background-color: #00aaff;
     border: 1px solid hsla(0, 0%, 100%, 1);
 }
 
