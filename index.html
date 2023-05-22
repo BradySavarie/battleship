@@ -8,37 +8,37 @@
         <script src="./main.js" defer></script>
     </head>
     <body>
-        <div
-            class="place_ships_screen_container"
-            id="place_ships_screen_container"
-        >
-            <header class="header">
-                <h1 class="game_title">Battleship</h1>
-                <button class="new_game_btn">NEW GAME</button>
+        <section class="content-container">
+            <header class="content-container__header">
+                <h1 class="header__game-title">Battleship</h1>
+                <button class="header__new-game-btn">NEW GAME</button>
             </header>
-            <main class="main_content">
-                <div class="game_board_container" id="game_board_container">
+            <main class="content-container__main">
+                <div
+                    class="main__game-board-container"
+                    id="game-board-container"
+                >
                     <p>Your Gameboard</p>
                     <!-- Dynamically render the game board here -->
                 </div>
 
-                <div class="placement_controls_container">
-                    <div class="place_ships_instructions_container">
+                <div class="main__placement-controls">
+                    <div class="placement-controls__instructions">
                         <h2>Place Your Ships:</h2>
                         <p>(Double-click to rotate once placed)</p>
                     </div>
                     <div
-                        class="unplaced_ships_container"
-                        id="unplaced_ships_container"
+                        class="placement-controls__block-ships"
+                        id="placement-controls__block-ships"
                     >
                         <!-- Dynamically render unplaced ships here -->
                     </div>
-                    <div class="placement_controls_buttons_container">
+                    <div class="placement-controls__buttons">
                         <button>START GAME</button>
                         <button>RANDOMIZE</button>
                     </div>
                 </div>
             </main>
-        </div>
+        </section>
     </body>
 </html>
