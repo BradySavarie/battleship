@@ -1,23 +1,23 @@
 import { Ship } from '../models/ship';
 
 export function renderGameboard(size: number) {
-    const game_board = document.createElement('div');
-    game_board.classList.add('game-board-container__game-board');
+    const gameBoard = document.createElement('div');
+    gameBoard.classList.add('game-board-container__game-board');
 
-    game_board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-    game_board.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+    gameBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    gameBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
     for (let i = 0; i < size * size; i++) {
         const cell = document.createElement('div');
-        cell.classList.add('cell');
-        game_board.appendChild(cell);
+        cell.classList.add('cell', 'empty');
+        gameBoard.appendChild(cell);
     }
 
-    let game_board_container = document.getElementById(
+    let gameBoardContainer = document.getElementById(
         'game-board-container'
     ) as HTMLDivElement;
 
-    game_board_container.appendChild(game_board);
+    gameBoardContainer.appendChild(gameBoard);
 }
 
 export function renderShips(ships: Ship[]) {
