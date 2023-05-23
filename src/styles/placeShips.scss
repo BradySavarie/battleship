@@ -111,6 +111,10 @@ $red: #dc143c;
     &.placementInvalid {
         background-color: $red;
     }
+
+    &.fill {
+        background-color: $orange;
+    }
 }
 
 .draggable {

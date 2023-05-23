@@ -1,7 +1,14 @@
 import { Ship } from '../models/ship';
 import { getActivePlayer } from '../models/state';
 
+// Global Variables
+
 let currentBlockShip: HTMLDivElement;
+let dropSuccessful: boolean;
+let gameBoardContainer = document.getElementById(
+    'game-board-container'
+) as HTMLDivElement;
+
 // Rendering Functions
 
 export function renderGameboard(size: number) {
@@ -20,10 +27,6 @@ export function renderGameboard(size: number) {
             gameBoard.appendChild(cell);
         }
     }
-
-    let gameBoardContainer = document.getElementById(
-        'game-board-container'
-    ) as HTMLDivElement;
 
     gameBoardContainer.appendChild(gameBoard);
 }
@@ -58,7 +61,7 @@ export function renderShips(ships: Ship[]) {
         container.appendChild(shipName);
         blockShipsContainer.appendChild(container);
 
-        // Add DragnDrop Listeners
+        // Make ships invisible on dragstart
         blockShip.addEventListener('dragstart', (e) => {
             currentBlockShip = e.target as HTMLDivElement;
             setTimeout(() => {
@@ -66,8 +69,11 @@ export function renderShips(ships: Ship[]) {
             }, 0);
         });
 
+        // Remove validity classes for empty cells on dragend
         blockShip.addEventListener('dragend', () => {
-            blockShip.classList.toggle('invisible');
+            if (!dropSuccessful) {
+                blockShip.classList.toggle('invisible');
+            }
             let empties = document.querySelectorAll('.empty');
             for (let empty of empties) {
                 empty.classList.remove('placementValid', 'placementInvalid');
@@ -76,11 +82,7 @@ export function renderShips(ships: Ship[]) {
     });
 }
 
-// DragnDrop
-
-let gameBoardContainer = document.getElementById(
-    'game-board-container'
-) as HTMLDivElement;
+// Add DragnDrop functionality to gameboard
 
 gameBoardContainer.addEventListener('dragenter', (e) => {
     // loop through each empty cell, removing both validity classes
@@ -89,37 +91,67 @@ gameBoardContainer.addEventListener('dragenter', (e) => {
         empty.classList.remove('placementValid', 'placementInvalid');
     }
 
+    // get targets row and col data values
     const target = e.target as HTMLElement;
-    let isValid: boolean;
-    // get row and col data values
     let row = parseInt(target.dataset.row as string);
     let col = parseInt(target.dataset.col as string);
-    // check placement validity of selected ship
+
+    // Identify ship being dragged
     let human = getActivePlayer();
     let shipName = currentBlockShip.dataset.shipname;
-    human.ships.forEach((ship) => {
-        if (ship.name === shipName) {
-            isValid = human.board.validatePlacement(ship, row, col);
+    let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
+
+    // Validate placement and add validity classes to correct cells
+    let isValid: boolean = human.board.validatePlacement(ship, row, col);
+    if (isValid) {
+        for (let i = 0; i < ship.length; i++) {
+            const cell = document.querySelector(
+                `[data-row="${row}"][data-col="${col + i}"]`
+            ) as HTMLDivElement;
+            cell.classList.add('placementValid');
+            cell.classList.remove('placementInvalid');
         }
-        // toggle validity classes
-        if (isValid) {
-            for (let i = 0; i < ship.length; i++) {
-                const cell = document.querySelector(
-                    `[data-row="${row}"][data-col="${col + i}"]`
-                ) as HTMLDivElement;
-                cell.classList.add('placementValid');
-                cell.classList.remove('placementInvalid');
-            }
-        } else if (isValid === false) {
-            for (let i = 0; col + i < 10; i++) {
-                const cell = document.querySelector(
-                    `[data-row="${row}"][data-col="${col + i}"]`
-                ) as HTMLDivElement;
-                cell.classList.add('placementInvalid');
-                cell.classList.remove('placementValid');
-            }
+    } else {
+        for (let i = 0; col + i < 10; i++) {
+            const cell = document.querySelector(
+                `[data-row="${row}"][data-col="${col + i}"]`
+            ) as HTMLDivElement;
+            cell.classList.add('placementInvalid');
+            cell.classList.remove('placementValid');
         }
-    });
+    }
 });
 
-gameBoardContainer.addEventListener('dragleave', () => {});
+// Handle dragover events
+gameBoardContainer.addEventListener('dragover', handleDragOver);
+
+function handleDragOver(e: DragEvent) {
+    e.preventDefault();
+}
+
+gameBoardContainer.addEventListener('drop', (e) => {
+    e.preventDefault();
+    // get targets row and col data values
+    const target = e.target as HTMLElement;
+    let row = parseInt(target.dataset.row as string);
+    let col = parseInt(target.dataset.col as string);
+
+    // Identify ship being dragged
+    let human = getActivePlayer();
+    let shipName = currentBlockShip.dataset.shipname;
+    let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
+    const shipIndex = human.ships.findIndex((ship) => ship.name === shipName);
+
+    // Handle Drop Success
+    dropSuccessful = human.board.placeShip(ship, shipIndex, [row, col]);
+    if (dropSuccessful) {
+        // for each valid cell
+        // add replace empty class with fill class
+        for (let i = 0; i < ship.length; i++) {
+            const cell = document.querySelector(
+                `[data-row="${row}"][data-col="${col + i}"]`
+            ) as HTMLDivElement;
+            cell.classList.replace('empty', 'fill');
+        }
+    }
+});
