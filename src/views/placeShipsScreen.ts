@@ -68,6 +68,10 @@ export function renderShips(ships: Ship[]) {
 
         blockShip.addEventListener('dragend', () => {
             blockShip.classList.toggle('invisible');
+            let empties = document.querySelectorAll('.empty');
+            for (let empty of empties) {
+                empty.classList.remove('placementValid', 'placementInvalid');
+            }
         });
     });
 }
@@ -79,6 +83,12 @@ let gameBoardContainer = document.getElementById(
 ) as HTMLDivElement;
 
 gameBoardContainer.addEventListener('dragenter', (e) => {
+    // loop through each empty cell, removing both validity classes
+    let empties = document.querySelectorAll('.empty');
+    for (let empty of empties) {
+        empty.classList.remove('placementValid', 'placementInvalid');
+    }
+
     const target = e.target as HTMLElement;
     let isValid: boolean;
     // get row and col data values
@@ -93,19 +103,23 @@ gameBoardContainer.addEventListener('dragenter', (e) => {
         }
         // toggle validity classes
         if (isValid) {
-            target.classList.toggle('placementValid');
-        } else {
-            target.classList.toggle('placementInvalid');
+            for (let i = 0; i < ship.length; i++) {
+                const cell = document.querySelector(
+                    `[data-row="${row}"][data-col="${col + i}"]`
+                ) as HTMLDivElement;
+                cell.classList.add('placementValid');
+                cell.classList.remove('placementInvalid');
+            }
+        } else if (isValid === false) {
+            for (let i = 0; col + i < 10; i++) {
+                const cell = document.querySelector(
+                    `[data-row="${row}"][data-col="${col + i}"]`
+                ) as HTMLDivElement;
+                cell.classList.add('placementInvalid');
+                cell.classList.remove('placementValid');
+            }
         }
     });
 });
 
-gameBoardContainer.addEventListener('dragleave', (e) => {
-    const target = e.target as HTMLElement;
-    if (target.classList.contains('placementValid')) {
-        target.classList.toggle('placementValid');
-    }
-    if (target.classList.contains('placementInvalid')) {
-        target.classList.toggle('placementInvalid');
-    }
-});
+gameBoardContainer.addEventListener('dragleave', () => {});
