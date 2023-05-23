@@ -58,7 +58,7 @@ export class Gameboard {
         }
     }
 
-    private validatePlacement(ship: Ship, row: number, col: number): boolean {
+    validatePlacement(ship: Ship, row: number, col: number): boolean {
         // Will the ship collide with another ship?
         if (ship.orientation === 'horizontal') {
             for (let i = 0; i < ship.length; i++) {
