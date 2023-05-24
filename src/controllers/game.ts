@@ -1,7 +1,7 @@
 // Responsible for handling the general flow of the game.
 import { Human, Computer } from '../models/player';
 import { setActivePlayer } from '../models/state';
-import { initialGameboardRender, renderShips } from '../views/placeShipsScreen';
+import { initialGameboardRender, renderFleet } from '../views/placeShipsScreen';
 
 export function startGame() {
     let human = new Human();
@@ -9,7 +9,7 @@ export function startGame() {
     placeComputerShips(computer);
     setActivePlayer(human);
     initialGameboardRender(human.board.boardSize);
-    renderShips(human.ships);
+    renderFleet(human.ships);
 }
 
 function placeComputerShips(computer: Computer) {

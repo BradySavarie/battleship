@@ -9,7 +9,7 @@ let gameBoardContainer = document.getElementById(
     'game-board-container'
 ) as HTMLDivElement;
 
-// Rendering Functions
+// Initial Rendering Functions
 
 export function initialGameboardRender(size: number) {
     const gameBoard = document.createElement('div');
@@ -28,7 +28,7 @@ export function initialGameboardRender(size: number) {
     gameBoardContainer.appendChild(gameBoard);
 }
 
-export function renderShips(ships: Ship[]) {
+export function renderFleet(ships: Ship[]) {
     ships.forEach((ship) => {
         // Create Elements
         let container = document.createElement('div');
@@ -121,17 +121,28 @@ gameBoardContainer.addEventListener('drop', (e) => {
     let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
     const shipIndex = human.ships.findIndex((ship) => ship.name === shipName);
 
-    // Handle Drop Success
+    // Place ship
     dropSuccessful = human.board.placeShip(ship, shipIndex, [row, col]);
+
+    // Render ship to board
     if (dropSuccessful) {
-        for (let i = 0; i < ship.length; i++) {
-            const cell = document.querySelector(
-                `[data-row="${row}"][data-col="${col + i}"]`
-            ) as HTMLDivElement;
-            cell.classList.replace('empty', 'fill');
-        }
+        renderGameBoard();
     }
 });
+
+function renderGameBoard() {
+    let human = getActivePlayer();
+    for (let row = 0; row < human.board.boardSize; row++) {
+        for (let col = 0; col < human.board.boardSize; col++) {
+            if (human.board.shipPositions[row][col] !== null) {
+                const cell = document.querySelector(
+                    `[data-row="${row}"][data-col="${col}"]`
+                ) as HTMLDivElement;
+                cell.classList.replace('empty', 'fill');
+            }
+        }
+    }
+}
 
 function renderValidityStatus(
     isValid: boolean,

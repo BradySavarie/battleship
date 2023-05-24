@@ -25,7 +25,7 @@ $red: #dc143c;
     justify-content: space-between;
 }
 
-.header__new-game-btn {
+.header__reset-btn {
     background-color: $off-white;
     border: 2px solid $orange;
 
@@ -116,6 +116,7 @@ $red: #dc143c;
 
     &.fill {
         background-color: $orange;
+        cursor: pointer;
     }
 }
 
