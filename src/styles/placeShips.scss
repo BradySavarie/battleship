@@ -54,6 +54,8 @@ $red: #dc143c;
     height: $boardsize;
     width: $boardsize;
     display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
 }
 
 .main__placement-controls {

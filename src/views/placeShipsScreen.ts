@@ -11,12 +11,9 @@ let gameBoardContainer = document.getElementById(
 
 // Rendering Functions
 
-export function renderGameboard(size: number) {
+export function initialGameboardRender(size: number) {
     const gameBoard = document.createElement('div');
     gameBoard.classList.add('game-board-container__game-board');
-
-    gameBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-    gameBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
     for (let row: number = 0; row < size; row++) {
         for (let col: number = 0; col < size; col++) {
@@ -74,10 +71,7 @@ export function renderShips(ships: Ship[]) {
             if (!dropSuccessful) {
                 blockShip.classList.toggle('invisible');
             }
-            let empties = document.querySelectorAll('.empty');
-            for (let empty of empties) {
-                empty.classList.remove('placementValid', 'placementInvalid');
-            }
+            resetValidityRendering();
         });
     });
 }
@@ -85,13 +79,10 @@ export function renderShips(ships: Ship[]) {
 // Add DragnDrop functionality to gameboard
 
 gameBoardContainer.addEventListener('dragenter', (e) => {
-    // loop through each empty cell, removing both validity classes
-    let empties = document.querySelectorAll('.empty');
-    for (let empty of empties) {
-        empty.classList.remove('placementValid', 'placementInvalid');
-    }
+    // Reset validity classes
+    resetValidityRendering();
 
-    // get targets row and col data values
+    // Identify target cell
     const target = e.target as HTMLElement;
     let row = parseInt(target.dataset.row as string);
     let col = parseInt(target.dataset.col as string);
@@ -101,25 +92,11 @@ gameBoardContainer.addEventListener('dragenter', (e) => {
     let shipName = currentBlockShip.dataset.shipname;
     let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
 
-    // Validate placement and add validity classes to correct cells
+    // Validate placement
     let isValid: boolean = human.board.validatePlacement(ship, row, col);
-    if (isValid) {
-        for (let i = 0; i < ship.length; i++) {
-            const cell = document.querySelector(
-                `[data-row="${row}"][data-col="${col + i}"]`
-            ) as HTMLDivElement;
-            cell.classList.add('placementValid');
-            cell.classList.remove('placementInvalid');
-        }
-    } else {
-        for (let i = 0; col + i < 10; i++) {
-            const cell = document.querySelector(
-                `[data-row="${row}"][data-col="${col + i}"]`
-            ) as HTMLDivElement;
-            cell.classList.add('placementInvalid');
-            cell.classList.remove('placementValid');
-        }
-    }
+
+    // Render status to board
+    renderValidityStatus(isValid, ship, row, col);
 });
 
 // Handle dragover events
@@ -128,6 +105,8 @@ gameBoardContainer.addEventListener('dragover', handleDragOver);
 function handleDragOver(e: DragEvent) {
     e.preventDefault();
 }
+
+// Listen for drops
 
 gameBoardContainer.addEventListener('drop', (e) => {
     e.preventDefault();
@@ -145,8 +124,6 @@ gameBoardContainer.addEventListener('drop', (e) => {
     // Handle Drop Success
     dropSuccessful = human.board.placeShip(ship, shipIndex, [row, col]);
     if (dropSuccessful) {
-        // for each valid cell
-        // add replace empty class with fill class
         for (let i = 0; i < ship.length; i++) {
             const cell = document.querySelector(
                 `[data-row="${row}"][data-col="${col + i}"]`
@@ -155,3 +132,37 @@ gameBoardContainer.addEventListener('drop', (e) => {
         }
     }
 });
+
+function renderValidityStatus(
+    isValid: boolean,
+    ship: Ship,
+    row: number,
+    col: number
+) {
+    if (isValid) {
+        for (let i = 0; i < ship.length; i++) {
+            const cell = document.querySelector(
+                `[data-row="${row}"][data-col="${col + i}"]`
+            ) as HTMLDivElement;
+            cell.classList.add('placementValid');
+            cell.classList.remove('placementInvalid');
+        }
+    } else {
+        for (let i = 0; i < ship.length; i++) {
+            if (col + i < 10) {
+                const cell = document.querySelector(
+                    `[data-row="${row}"][data-col="${col + i}"]`
+                ) as HTMLDivElement;
+                cell.classList.add('placementInvalid');
+                cell.classList.remove('placementValid');
+            }
+        }
+    }
+}
+
+function resetValidityRendering() {
+    let empties = document.querySelectorAll('.empty');
+    for (let empty of empties) {
+        empty.classList.remove('placementValid', 'placementInvalid');
+    }
+}
