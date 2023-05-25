@@ -91,6 +91,24 @@ describe('tests placeShips method', () => {
     });
 });
 
+describe('tests rotateShip method', () => {
+    it('Checks if valid rotation occurs', () => {
+        let testPlayer = new Human();
+        testPlayer.board.placeShip(testPlayer.ships[0], 0, [0, 0]);
+        testPlayer.board.rotateShip(testPlayer.ships[0], 0, 0, 0);
+        expect(testPlayer.board.shipPositions[4][0]).toBe(0);
+    });
+});
+
+describe('tests rotateShip method', () => {
+    it('Checks if invalid rotation is handled', () => {
+        let testPlayer = new Human();
+        testPlayer.board.placeShip(testPlayer.ships[0], 0, [6, 0]);
+        testPlayer.board.rotateShip(testPlayer.ships[0], 0, 6, 0);
+        expect(testPlayer.board.shipPositions[6][1]).toBe(0);
+    });
+});
+
 describe('tests receiveAttack method', () => {
     it('Checks if attackState array is accurately updated on hit', () => {
         let testPlayer = new Human();

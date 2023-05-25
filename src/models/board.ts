@@ -55,13 +55,10 @@ export class Gameboard {
         let isValid = this.placeShip(ship, index, [row, col]);
 
         // Reset ship and positions array if false, return status
-        if (isValid) {
-            console.log(this.shipPositions);
-            return true;
-        } else {
+        if (isValid) return true;
+        else {
             this.shipPositions = prevState;
             ship.changeOrientation();
-            console.log(this.shipPositions);
             return false;
         }
     }
