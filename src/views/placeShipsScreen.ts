@@ -180,7 +180,7 @@ gameBoardContainer.addEventListener('drop', (e) => {
     }
 });
 
-gameBoardContainer.addEventListener('click', (e) => {
+gameBoardContainer.addEventListener('dblclick', (e) => {
     if (e.target instanceof HTMLDivElement) {
         let human = getActivePlayer();
         const target = e.target;
