@@ -40,6 +40,32 @@ export class Gameboard {
         return true;
     }
 
+    rotateShip(ship: Ship, index: number, row: number, col: number) {
+        let prevState = this.shipPositions;
+
+        // change orientation of ship
+        ship.changeOrientation();
+
+        // find and replace index values with null in shipPositions array
+        this.shipPositions = this.shipPositions.map((row) =>
+            row.map((element) => (element === index ? null : element))
+        );
+
+        // call placeShip using input coordinates
+        let isValid = this.placeShip(ship, index, [row, col]);
+
+        // Reset ship and positions array if false, return status
+        if (isValid) {
+            console.log(this.shipPositions);
+            return true;
+        } else {
+            this.shipPositions = prevState;
+            ship.changeOrientation();
+            console.log(this.shipPositions);
+            return false;
+        }
+    }
+
     receiveAttack(coordinate: number[], ships: Ship[]): boolean {
         const [row, col] = coordinate;
         // Validate that coordinate has not been previously attacked

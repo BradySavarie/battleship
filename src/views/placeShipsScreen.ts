@@ -9,7 +9,7 @@ let gameBoardContainer = document.getElementById(
     'game-board-container'
 ) as HTMLDivElement;
 
-// Initial Rendering Functions
+// Functions
 
 export function initialGameboardRender(size: number) {
     const gameBoard = document.createElement('div');
@@ -76,69 +76,18 @@ export function renderFleet(ships: Ship[]) {
     });
 }
 
-// Add DragnDrop functionality to gameboard
-
-gameBoardContainer.addEventListener('dragenter', (e) => {
-    // Reset validity classes
-    resetValidityRendering();
-
-    // Identify target cell
-    const target = e.target as HTMLElement;
-    let row = parseInt(target.dataset.row as string);
-    let col = parseInt(target.dataset.col as string);
-
-    // Identify ship being dragged
-    let human = getActivePlayer();
-    let shipName = currentBlockShip.dataset.shipname;
-    let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
-
-    // Validate placement
-    let isValid: boolean = human.board.validatePlacement(ship, row, col);
-
-    // Render status to board
-    renderValidityStatus(isValid, ship, row, col);
-});
-
-// Handle dragover events
-gameBoardContainer.addEventListener('dragover', handleDragOver);
-
-function handleDragOver(e: DragEvent) {
-    e.preventDefault();
-}
-
-// Listen for drops
-
-gameBoardContainer.addEventListener('drop', (e) => {
-    e.preventDefault();
-    // get targets row and col data values
-    const target = e.target as HTMLElement;
-    let row = parseInt(target.dataset.row as string);
-    let col = parseInt(target.dataset.col as string);
-
-    // Identify ship being dragged
-    let human = getActivePlayer();
-    let shipName = currentBlockShip.dataset.shipname;
-    let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
-    const shipIndex = human.ships.findIndex((ship) => ship.name === shipName);
-
-    // Place ship
-    dropSuccessful = human.board.placeShip(ship, shipIndex, [row, col]);
-
-    // Render ship to board
-    if (dropSuccessful) {
-        renderGameBoard();
-    }
-});
-
 function renderGameBoard() {
+    resetValidityRendering();
     let human = getActivePlayer();
     for (let row = 0; row < human.board.boardSize; row++) {
         for (let col = 0; col < human.board.boardSize; col++) {
+            const cell = document.querySelector(
+                `[data-row="${row}"][data-col="${col}"]`
+            ) as HTMLDivElement;
             if (human.board.shipPositions[row][col] !== null) {
-                const cell = document.querySelector(
-                    `[data-row="${row}"][data-col="${col}"]`
-                ) as HTMLDivElement;
                 cell.classList.replace('empty', 'fill');
+            } else {
+                cell.classList.replace('fill', 'empty');
             }
         }
     }
@@ -177,3 +126,74 @@ function resetValidityRendering() {
         empty.classList.remove('placementValid', 'placementInvalid');
     }
 }
+
+// Event Listeners
+
+gameBoardContainer.addEventListener('dragenter', (e) => {
+    // Reset validity classes
+    resetValidityRendering();
+
+    // Identify target cell
+    const target = e.target as HTMLElement;
+    let row = parseInt(target.dataset.row as string);
+    let col = parseInt(target.dataset.col as string);
+
+    // Identify ship being dragged
+    let human = getActivePlayer();
+    let shipName = currentBlockShip.dataset.shipname;
+    let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
+
+    // Validate placement
+    let isValid: boolean = human.board.validatePlacement(ship, row, col);
+
+    // Render status to board
+    renderValidityStatus(isValid, ship, row, col);
+});
+
+gameBoardContainer.addEventListener('dragover', handleDragOver);
+
+function handleDragOver(e: DragEvent) {
+    e.preventDefault();
+}
+
+gameBoardContainer.addEventListener('drop', (e) => {
+    e.preventDefault();
+    // get targets row and col data values
+    const target = e.target as HTMLElement;
+    let row = parseInt(target.dataset.row as string);
+    let col = parseInt(target.dataset.col as string);
+
+    // Identify ship being dragged
+    let human = getActivePlayer();
+    let shipName = currentBlockShip.dataset.shipname;
+    let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
+    const shipIndex = human.ships.findIndex((ship) => ship.name === shipName);
+
+    // Place ship
+    dropSuccessful = human.board.placeShip(ship, shipIndex, [row, col]);
+
+    // Render ship to board
+    if (dropSuccessful) {
+        renderGameBoard();
+    } else {
+        resetValidityRendering();
+    }
+});
+
+gameBoardContainer.addEventListener('click', (e) => {
+    if (e.target instanceof HTMLDivElement) {
+        let human = getActivePlayer();
+        const target = e.target;
+        let row = parseInt(target.dataset.row as string);
+        let col = parseInt(target.dataset.col as string);
+
+        if (human.board.shipPositions[row][col] !== null) {
+            let index = human.board.shipPositions[row][col] as number;
+            let ship = human.ships[index];
+            let isSuccess = human.board.rotateShip(ship, index, row, col);
+            if (isSuccess) {
+                renderGameBoard();
+            }
+        }
+    }
+});
