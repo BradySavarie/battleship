@@ -3,11 +3,14 @@ import { getActivePlayer } from '../models/state';
 
 // Global Variables
 
-let currentBlockShip: HTMLDivElement;
+let currentBlockShip: HTMLElement;
 let dropSuccessful: boolean;
 let gameBoardContainer = document.getElementById(
     'game-board-container'
-) as HTMLDivElement;
+) as HTMLElement;
+let randomizeBtn = document.getElementById(
+    'buttons__randomize-btn'
+) as HTMLElement;
 
 // Functions
 
@@ -180,6 +183,8 @@ gameBoardContainer.addEventListener('drop', (e) => {
     }
 });
 
+// Handle ship rotations on click
+
 gameBoardContainer.addEventListener('click', (e) => {
     if (e.target instanceof HTMLDivElement) {
         let human = getActivePlayer();
@@ -196,4 +201,19 @@ gameBoardContainer.addEventListener('click', (e) => {
             }
         }
     }
+});
+
+// Handle randomization of ships on click
+
+randomizeBtn.addEventListener('click', () => {
+    let blockShips = Array.from(
+        document.getElementsByClassName('block-ships__ship')
+    );
+    blockShips.forEach((blockShip) => {
+        blockShip.classList.add('invisible');
+    });
+    let human = getActivePlayer();
+    resetValidityRendering();
+    human.board.randomizeShips(human.ships);
+    renderGameBoard();
 });

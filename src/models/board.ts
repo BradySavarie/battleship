@@ -54,13 +54,36 @@ export class Gameboard {
         // call placeShip using input coordinates
         let isValid = this.placeShip(ship, index, [row, col]);
 
-        // Reset ship and positions array if false, return status
+        // Reset ship and positions array if isValid is false, return status
         if (isValid) return true;
         else {
             this.shipPositions = prevState;
             ship.changeOrientation();
             return false;
         }
+    }
+
+    randomizeShips(ships: Ship[]) {
+        for (let i = 0; i < this.boardSize; i++) {
+            for (let j = 0; j < this.boardSize; j++) {
+                this.shipPositions[i][j] = null;
+            }
+        }
+        ships.forEach((ship, index) => {
+            let isSuccessful;
+
+            while (!isSuccessful) {
+                let row = Math.floor(Math.random() * 10);
+                let col = Math.floor(Math.random() * 10);
+                let orientationChanged = Math.random() < 0.5;
+
+                if (orientationChanged) {
+                    ship.changeOrientation();
+                }
+
+                isSuccessful = this.placeShip(ship, index, [row, col]);
+            }
+        });
     }
 
     receiveAttack(coordinate: number[], ships: Ship[]): boolean {

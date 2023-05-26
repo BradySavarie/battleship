@@ -11,7 +11,9 @@
         <section class="content-container">
             <header class="content-container__header">
                 <h1 class="header__game-title">Battleship</h1>
-                <button class="header__reset-btn">RESET SHIPS</button>
+                <button class="header__reset-btn" onclick="location.reload()">
+                    RESET SHIPS
+                </button>
             </header>
             <main class="content-container__main">
                 <div class="main__game-board-container">
@@ -33,7 +35,7 @@
                     </div>
                     <div class="placement-controls__buttons">
                         <button>START GAME</button>
-                        <button>RANDOMIZE</button>
+                        <button id="buttons__randomize-btn">RANDOMIZE</button>
                     </div>
                 </div>
             </main>
