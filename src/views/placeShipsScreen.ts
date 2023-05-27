@@ -225,7 +225,19 @@ randomizeBtn.addEventListener('click', () => {
     renderGameBoard();
 });
 
-// Notify controller of game start
+// Notify controller of game start if ships are all placed
 startGameBtn.addEventListener('click', () => {
-    initializeBattleScreen();
+    let shipsPlaced: boolean = true;
+    let human = getActivePlayer();
+
+    for (let ship of human.ships) {
+        if (!ship.isPlaced) {
+            shipsPlaced = false;
+            return;
+        }
+    }
+
+    if (shipsPlaced) {
+        initializeBattleScreen();
+    }
 });

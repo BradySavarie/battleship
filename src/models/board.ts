@@ -37,6 +37,7 @@ export class Gameboard {
             }
         }
 
+        ship.isPlaced = true;
         return true;
     }
 

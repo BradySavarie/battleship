@@ -3,7 +3,8 @@ export class Ship {
         readonly length: number,
         readonly name: string,
         public hits: number = 0,
-        public orientation: string = 'horizontal'
+        public orientation: string = 'horizontal',
+        public isPlaced: boolean = false
     ) {
         this.length = length;
         this.name = name;
