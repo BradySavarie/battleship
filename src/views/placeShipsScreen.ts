@@ -1,22 +1,28 @@
+import { initializeBattleScreen } from '../controllers/game';
+import { Human } from '../models/player';
 import { Ship } from '../models/ship';
 import { getActivePlayer } from '../models/state';
 
 // Global Variables
 
-let currentBlockShip: HTMLElement;
+let activeShip: HTMLElement;
 let dropSuccessful: boolean;
+
 let gameBoardContainer = document.getElementById(
     'game-board-container'
 ) as HTMLElement;
 let randomizeBtn = document.getElementById(
     'buttons__randomize-btn'
 ) as HTMLElement;
+let startGameBtn = document.getElementById(
+    'buttons__start-game-btn'
+) as HTMLElement;
 
 // Functions
 
-export function initialGameboardRender(size: number) {
-    const gameBoard = document.createElement('div');
-    gameBoard.classList.add('game-board-container__game-board');
+export function buildHumanGameboard(size: number) {
+    let humanGameboard = document.createElement('div');
+    humanGameboard.classList.add('game-board-container__game-board');
 
     for (let row: number = 0; row < size; row++) {
         for (let col: number = 0; col < size; col++) {
@@ -24,11 +30,11 @@ export function initialGameboardRender(size: number) {
             cell.classList.add('cell', 'empty');
             cell.setAttribute('data-row', `${row}`);
             cell.setAttribute('data-col', `${col}`);
-            gameBoard.appendChild(cell);
+            humanGameboard.appendChild(cell);
         }
     }
 
-    gameBoardContainer.appendChild(gameBoard);
+    gameBoardContainer.appendChild(humanGameboard);
 }
 
 export function renderFleet(ships: Ship[]) {
@@ -63,7 +69,7 @@ export function renderFleet(ships: Ship[]) {
 
         // Make ships invisible on dragstart
         blockShip.addEventListener('dragstart', (e) => {
-            currentBlockShip = e.target as HTMLDivElement;
+            activeShip = e.target as HTMLDivElement;
             setTimeout(() => {
                 blockShip.classList.toggle('invisible');
             }, 0);
@@ -116,6 +122,7 @@ function renderValidityStatus(
                 const cell = document.querySelector(
                     `[data-row="${row}"][data-col="${col + i}"]`
                 ) as HTMLDivElement;
+
                 cell.classList.add('placementInvalid');
                 cell.classList.remove('placementValid');
             }
@@ -124,9 +131,9 @@ function renderValidityStatus(
 }
 
 function resetValidityRendering() {
-    let empties = document.querySelectorAll('.empty');
-    for (let empty of empties) {
-        empty.classList.remove('placementValid', 'placementInvalid');
+    let cells = document.querySelectorAll('.empty, .fill');
+    for (let cell of cells) {
+        cell.classList.remove('placementValid', 'placementInvalid');
     }
 }
 
@@ -143,7 +150,7 @@ gameBoardContainer.addEventListener('dragenter', (e) => {
 
     // Identify ship being dragged
     let human = getActivePlayer();
-    let shipName = currentBlockShip.dataset.shipname;
+    let shipName = activeShip.dataset.shipname;
     let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
 
     // Validate placement
@@ -168,7 +175,7 @@ gameBoardContainer.addEventListener('drop', (e) => {
 
     // Identify ship being dragged
     let human = getActivePlayer();
-    let shipName = currentBlockShip.dataset.shipname;
+    let shipName = activeShip.dataset.shipname;
     let ship = human.ships.find((ship) => ship.name === shipName) as Ship;
     const shipIndex = human.ships.findIndex((ship) => ship.name === shipName);
 
@@ -213,7 +220,12 @@ randomizeBtn.addEventListener('click', () => {
         blockShip.classList.add('invisible');
     });
     let human = getActivePlayer();
-    resetValidityRendering();
     human.board.randomizeShips(human.ships);
+    resetValidityRendering();
     renderGameBoard();
+});
+
+// Notify controller of game start
+startGameBtn.addEventListener('click', () => {
+    initializeBattleScreen();
 });
