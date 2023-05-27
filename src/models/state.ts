@@ -2,6 +2,7 @@
 import { Human, Computer } from './player';
 
 let activePlayer: Human | Computer;
+let gameStatus: string = 'pregame';
 
 export function setActivePlayer(player: Human | Computer) {
     activePlayer = player;
@@ -9,4 +10,12 @@ export function setActivePlayer(player: Human | Computer) {
 
 export function getActivePlayer(): Human | Computer {
     return activePlayer;
+}
+
+export function setGameStatus(status: string) {
+    gameStatus = status;
+}
+
+export function getGameStatus() {
+    return gameStatus;
 }

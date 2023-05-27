@@ -1,7 +1,7 @@
 import { initializeBattleScreen } from '../controllers/game';
 import { Human } from '../models/player';
 import { Ship } from '../models/ship';
-import { getActivePlayer } from '../models/state';
+import { getActivePlayer, getGameStatus, setGameStatus } from '../models/state';
 
 // Global Variables
 
@@ -109,18 +109,18 @@ function renderValidityStatus(
     col: number
 ) {
     if (isValid) {
-        for (let i = 0; i < ship.length; i++) {
+        for (let offset = 0; offset < ship.length; offset++) {
             const cell = document.querySelector(
-                `[data-row="${row}"][data-col="${col + i}"]`
+                `[data-row="${row}"][data-col="${col + offset}"]`
             ) as HTMLDivElement;
             cell.classList.add('placementValid');
             cell.classList.remove('placementInvalid');
         }
     } else {
-        for (let i = 0; i < ship.length; i++) {
-            if (col + i < 10) {
+        for (let offset = 0; offset < ship.length; offset++) {
+            if (col + offset < 10) {
                 const cell = document.querySelector(
-                    `[data-row="${row}"][data-col="${col + i}"]`
+                    `[data-row="${row}"][data-col="${col + offset}"]`
                 ) as HTMLDivElement;
 
                 cell.classList.add('placementInvalid');
@@ -168,10 +168,10 @@ function handleDragOver(e: DragEvent) {
 
 gameBoardContainer.addEventListener('drop', (e) => {
     e.preventDefault();
-    // get targets row and col data values
-    const target = e.target as HTMLElement;
-    let row = parseInt(target.dataset.row as string);
-    let col = parseInt(target.dataset.col as string);
+    // get target cells row and col data values
+    const targetCell = e.target as HTMLElement;
+    let row = parseInt(targetCell.dataset.row as string);
+    let col = parseInt(targetCell.dataset.col as string);
 
     // Identify ship being dragged
     let human = getActivePlayer();
@@ -191,8 +191,9 @@ gameBoardContainer.addEventListener('drop', (e) => {
 });
 
 // Handle ship rotations on click
-
 gameBoardContainer.addEventListener('click', (e) => {
+    let gameStatus = getGameStatus();
+    if (gameStatus !== 'pregame') return;
     if (e.target instanceof HTMLDivElement) {
         let human = getActivePlayer();
         const target = e.target;
@@ -211,7 +212,6 @@ gameBoardContainer.addEventListener('click', (e) => {
 });
 
 // Handle randomization of ships on click
-
 randomizeBtn.addEventListener('click', () => {
     let blockShips = Array.from(
         document.getElementsByClassName('block-ships__ship')
@@ -238,6 +238,7 @@ startGameBtn.addEventListener('click', () => {
     }
 
     if (shipsPlaced) {
+        setGameStatus('ongoing');
         initializeBattleScreen();
     }
 });

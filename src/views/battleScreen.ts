@@ -15,7 +15,7 @@ export function buildComputerGameboard(size: number) {
     let fleetHeader = document.createElement('p');
     fleetHeader.textContent = 'Computers Fleet';
     fleetHeader.style.alignSelf = 'flex-end';
-    newGameBtn.textContent = 'New Game';
+    newGameBtn.textContent = 'NEW GAME';
 
     for (let row: number = 0; row < size; row++) {
         for (let col: number = 0; col < size; col++) {
