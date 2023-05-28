@@ -1,4 +1,6 @@
+import { Human } from '../models/player';
 import { getActivePlayer } from '../models/state';
+import { takeTurn } from '../controllers/game';
 
 let gameBoardContainer = document.querySelector(
     '.main__placement-controls'
@@ -54,6 +56,13 @@ export function renderAttackStatus() {
 gameBoardContainer.addEventListener('click', (e) => {
     if (e.target instanceof HTMLDivElement) {
         let targetCell = e.target;
-        console.log(targetCell);
+        let activePlayer = getActivePlayer();
+
+        let row = parseInt(targetCell.dataset.row as string);
+        let col = parseInt(targetCell.dataset.col as string);
+
+        if (activePlayer instanceof Human) {
+            takeTurn(activePlayer, row, col);
+        }
     }
 });

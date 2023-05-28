@@ -29,12 +29,25 @@ function placeComputerShips(computer: Computer) {
         let isSuccessful;
         // while the ship has not successfully been placed on the board
         while (!isSuccessful) {
-            // randomly generate a valid coordinate pair
+            // randomly rotate and generate a valid coordinate pair
             let row = Math.floor(Math.random() * 10);
             let col = Math.floor(Math.random() * 10);
+            let orientationChanged = Math.random() < 0.5;
+
+            if (orientationChanged) {
+                ship.changeOrientation();
+            }
             // attempt to place the ship on the board
             isSuccessful = computer.board.placeShip(ship, index, [row, col]);
         }
         ship.isPlaced = true;
     });
+}
+
+export function takeTurn(
+    activePlayer: Human | Computer,
+    row: number,
+    col: number
+) {
+    computer.board.receiveAttack([row, col], computer.ships);
 }
