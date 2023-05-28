@@ -1,3 +1,8 @@
-.cell.containsShip {
-    background-color: $orange;
+.cell {
+    &.containsShip {
+        background-color: $orange;
+    }
+    &.unattacked {
+        cursor: pointer;
+    }
 }

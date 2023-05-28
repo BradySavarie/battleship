@@ -27,7 +27,7 @@ export function buildHumanGameboard(size: number) {
     for (let row: number = 0; row < size; row++) {
         for (let col: number = 0; col < size; col++) {
             const cell = document.createElement('div');
-            cell.classList.add('cell', 'empty');
+            cell.classList.add('cell');
             cell.setAttribute('data-row', `${row}`);
             cell.setAttribute('data-col', `${col}`);
             humanGameboard.appendChild(cell);
@@ -86,8 +86,8 @@ export function renderFleet(ships: Ship[]) {
 }
 
 export function renderGameBoard() {
-    let gameStatus = getGameStatus();
     resetValidityRendering();
+    let gameStatus = getGameStatus();
     let human = getActivePlayer();
     for (let row = 0; row < human.board.boardSize; row++) {
         for (let col = 0; col < human.board.boardSize; col++) {
@@ -98,9 +98,9 @@ export function renderGameBoard() {
                 cell.classList.replace('fill', 'containsShip');
             } else {
                 if (human.board.shipPositions[row][col] !== null) {
-                    cell.classList.replace('empty', 'fill');
+                    cell.classList.add('fill');
                 } else {
-                    cell.classList.replace('fill', 'empty');
+                    cell.classList.remove('fill');
                 }
             }
         }
@@ -136,7 +136,7 @@ function renderValidityStatus(
 }
 
 function resetValidityRendering() {
-    let cells = document.querySelectorAll('.empty, .fill');
+    let cells = document.querySelectorAll('.cell');
     for (let cell of cells) {
         cell.classList.remove('placementValid', 'placementInvalid');
     }

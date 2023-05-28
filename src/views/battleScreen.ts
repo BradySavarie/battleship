@@ -1,3 +1,5 @@
+import { getActivePlayer } from '../models/state';
+
 let gameBoardContainer = document.querySelector(
     '.main__placement-controls'
 ) as HTMLElement;
@@ -20,7 +22,7 @@ export function buildComputerGameboard(size: number) {
     for (let row: number = 0; row < size; row++) {
         for (let col: number = 0; col < size; col++) {
             const cell = document.createElement('div');
-            cell.classList.add('cell');
+            cell.classList.add('cell', 'unattacked');
             cell.setAttribute('data-row', `${row}`);
             cell.setAttribute('data-col', `${col}`);
             computerGameboard.appendChild(cell);
@@ -30,3 +32,28 @@ export function buildComputerGameboard(size: number) {
     gameBoardContainer.appendChild(fleetHeader);
     gameBoardContainer.appendChild(computerGameboard);
 }
+
+export function renderAttackStatus() {
+    let activePlayer = getActivePlayer();
+    let cells = document.querySelectorAll('.cell');
+
+    cells.forEach((cell) => {
+        if (cell instanceof HTMLElement) {
+            let row = parseInt(cell.dataset.row as string);
+            let col = parseInt(cell.dataset.col as string);
+
+            if (activePlayer.board.attackState[row][col] === 'miss') {
+                cell.classList.replace('unattacked', 'miss');
+            } else if (activePlayer.board.attackState[row][col] === 'hit') {
+                cell.classList.replace('unattacked', 'hit');
+            }
+        }
+    });
+}
+
+gameBoardContainer.addEventListener('click', (e) => {
+    if (e.target instanceof HTMLDivElement) {
+        let targetCell = e.target;
+        console.log(targetCell);
+    }
+});
