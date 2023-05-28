@@ -1,7 +1,11 @@
 // Responsible for handling the general flow of the game.
 import { Human, Computer } from '../models/player';
 import { setActivePlayer } from '../models/state';
-import { buildHumanGameboard, renderFleet } from '../views/placeShipsScreen';
+import {
+    buildHumanGameboard,
+    renderFleet,
+    renderGameBoard,
+} from '../views/placeShipsScreen';
 import { buildComputerGameboard } from '../views/battleScreen';
 
 let human = new Human();
@@ -14,6 +18,7 @@ export function initializePlaceShipsScreen() {
 }
 
 export function initializeBattleScreen() {
+    renderGameBoard();
     placeComputerShips(computer);
     buildComputerGameboard(computer.board.boardSize);
 }

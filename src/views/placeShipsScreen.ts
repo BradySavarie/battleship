@@ -85,7 +85,8 @@ export function renderFleet(ships: Ship[]) {
     });
 }
 
-function renderGameBoard() {
+export function renderGameBoard() {
+    let gameStatus = getGameStatus();
     resetValidityRendering();
     let human = getActivePlayer();
     for (let row = 0; row < human.board.boardSize; row++) {
@@ -93,10 +94,14 @@ function renderGameBoard() {
             const cell = document.querySelector(
                 `[data-row="${row}"][data-col="${col}"]`
             ) as HTMLDivElement;
-            if (human.board.shipPositions[row][col] !== null) {
-                cell.classList.replace('empty', 'fill');
+            if (gameStatus === 'ongoing') {
+                cell.classList.replace('fill', 'containsShip');
             } else {
-                cell.classList.replace('fill', 'empty');
+                if (human.board.shipPositions[row][col] !== null) {
+                    cell.classList.replace('empty', 'fill');
+                } else {
+                    cell.classList.replace('fill', 'empty');
+                }
             }
         }
     }
