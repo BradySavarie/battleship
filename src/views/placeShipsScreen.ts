@@ -28,6 +28,7 @@ export function buildHumanGameboard(size: number) {
         for (let col: number = 0; col < size; col++) {
             const cell = document.createElement('div');
             cell.classList.add('cell');
+            cell.id = 'humanCell';
             cell.setAttribute('data-row', `${row}`);
             cell.setAttribute('data-col', `${col}`);
             humanGameboard.appendChild(cell);

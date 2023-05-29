@@ -6,7 +6,10 @@ import {
     renderFleet,
     renderGameBoard,
 } from '../views/placeShipsScreen';
-import { buildComputerGameboard } from '../views/battleScreen';
+import {
+    buildComputerGameboard,
+    renderAttackState,
+} from '../views/battleScreen';
 
 let human = new Human();
 let computer = new Computer();
@@ -49,5 +52,16 @@ export function takeTurn(
     row: number,
     col: number
 ) {
-    computer.board.receiveAttack([row, col], computer.ships);
+    if (activePlayer instanceof Human) {
+        setActivePlayer(computer);
+        computer.board.receiveAttack([row, col], computer.ships);
+        renderAttackState();
+        setTimeout(() => {
+            takeTurn(computer, row, col);
+        }, 250);
+    } else {
+        setActivePlayer(human);
+        human.board.receiveAttack([row, col], human.ships);
+        renderAttackState();
+    }
 }

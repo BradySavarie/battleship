@@ -5,4 +5,10 @@
     &.unattacked {
         cursor: pointer;
     }
+    &.miss {
+        background-color: grey;
+    }
+    &.hit {
+        background-color: red;
+    }
 }

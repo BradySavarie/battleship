@@ -25,6 +25,7 @@ export function buildComputerGameboard(size: number) {
         for (let col: number = 0; col < size; col++) {
             const cell = document.createElement('div');
             cell.classList.add('cell', 'unattacked');
+            cell.id = 'computerCell';
             cell.setAttribute('data-row', `${row}`);
             cell.setAttribute('data-col', `${col}`);
             computerGameboard.appendChild(cell);
@@ -35,19 +36,33 @@ export function buildComputerGameboard(size: number) {
     gameBoardContainer.appendChild(computerGameboard);
 }
 
-export function renderAttackStatus() {
+export function renderAttackState() {
+    let cells;
     let activePlayer = getActivePlayer();
-    let cells = document.querySelectorAll('.cell');
+
+    if (activePlayer instanceof Human) {
+        cells = document.querySelectorAll('#humanCell');
+    } else {
+        cells = document.querySelectorAll('#computerCell');
+    }
 
     cells.forEach((cell) => {
         if (cell instanceof HTMLElement) {
             let row = parseInt(cell.dataset.row as string);
             let col = parseInt(cell.dataset.col as string);
 
-            if (activePlayer.board.attackState[row][col] === 'miss') {
-                cell.classList.replace('unattacked', 'miss');
-            } else if (activePlayer.board.attackState[row][col] === 'hit') {
-                cell.classList.replace('unattacked', 'hit');
+            if (activePlayer instanceof Human) {
+                if (activePlayer.board.attackState[row][col] === 'miss') {
+                    cell.classList.add('miss');
+                } else if (activePlayer.board.attackState[row][col] === 'hit') {
+                    cell.classList.add('hit');
+                }
+            } else {
+                if (activePlayer.board.attackState[row][col] === 'miss') {
+                    cell.classList.replace('unattacked', 'miss');
+                } else if (activePlayer.board.attackState[row][col] === 'hit') {
+                    cell.classList.replace('unattacked', 'hit');
+                }
             }
         }
     });
