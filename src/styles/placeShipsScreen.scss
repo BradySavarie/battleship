@@ -1,9 +1,9 @@
 $boardsize: 50vmin;
 $off-white: #f3f3f3;
-$orange: #ff5500;
-$blue: #00aaff;
-$green: #00ffaa;
-$red: #dc143c;
+$orange: #f76b35;
+$blue: #41cce1;
+$green: #00ffae;
+$red: #ec2c04;
 
 @mixin flex-column($display: flex, $direction: column) {
     display: $display;

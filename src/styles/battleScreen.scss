@@ -6,9 +6,9 @@
         cursor: pointer;
     }
     &.miss {
-        background-color: grey;
+        background-color: rgba(65, 204, 225, 0.25);
     }
     &.hit {
-        background-color: red;
+        background-color: hsl(0, 100%, 50%);
     }
 }
