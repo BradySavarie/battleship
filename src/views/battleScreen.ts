@@ -6,6 +6,9 @@ let gameBoardContainer = document.querySelector(
     '.main__placement-controls'
 ) as HTMLElement;
 let newGameBtn = document.querySelector('.header__reset-btn') as HTMLElement;
+let statusMessage = document.querySelector(
+    '.header__status-message'
+) as HTMLElement;
 
 export function buildComputerGameboard(size: number) {
     gameBoardContainer.innerHTML = '';
@@ -66,6 +69,28 @@ export function renderAttackState() {
             }
         }
     });
+}
+
+export function renderResultMessage(attackState: string | null) {
+    let activePlayer = getActivePlayer();
+
+    if (activePlayer instanceof Human) {
+        if (attackState === 'miss') {
+            statusMessage.textContent = 'The computer missed!';
+        } else {
+            statusMessage.textContent = 'The computer hit a ship!';
+        }
+    } else {
+        if (attackState === 'miss') {
+            statusMessage.textContent = 'You missed!';
+        } else {
+            statusMessage.textContent = 'You hit a ship!';
+        }
+    }
+}
+
+export function clearResultMessage() {
+    statusMessage.textContent = '';
 }
 
 gameBoardContainer.addEventListener('click', (e) => {

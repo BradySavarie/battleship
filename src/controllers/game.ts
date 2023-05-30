@@ -9,6 +9,8 @@ import {
 import {
     buildComputerGameboard,
     renderAttackState,
+    renderResultMessage,
+    clearResultMessage,
 } from '../views/battleScreen';
 
 let human = new Human();
@@ -56,12 +58,17 @@ export function takeTurn(
         setActivePlayer(computer);
         computer.board.receiveAttack([row, col], computer.ships);
         renderAttackState();
+        renderResultMessage(computer.board.attackState[row][col]);
         setTimeout(() => {
             takeTurn(computer, row, col);
-        }, 250);
+        }, 1000);
     } else {
         setActivePlayer(human);
         human.board.receiveAttack([row, col], human.ships);
         renderAttackState();
+        renderResultMessage(human.board.attackState[row][col]);
+        setTimeout(() => {
+            clearResultMessage();
+        }, 1000);
     }
 }
