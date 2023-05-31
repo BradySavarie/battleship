@@ -60,18 +60,24 @@ export function takeTurn(
     row: number,
     col: number
 ) {
+    // Humans turn
     if (activePlayer instanceof Human) {
+        // target computer
         setActivePlayer(computer);
+        // send an attack
         let attackSuccess = computer.board.receiveAttack(
             [row, col],
             computer.ships
         );
+        // reset target and return if unsuccesful
         if (!attackSuccess) {
             setActivePlayer(human);
             return;
         }
+        // check for sunken ship
         let criticalHit = getCriticalHit();
         if (criticalHit) {
+            // if sunk, render sunken ship and results message
             let sunkenShipName = renderSunkenShip(
                 computer.board.shipPositions,
                 computer.ships,
@@ -83,13 +89,17 @@ export function takeTurn(
                 sunkenShipName
             );
         } else {
+            // if not sunk, render sunken ship and results message
             renderAttackState();
             renderResultMessage(computer.board.attackState[row][col]);
         }
+        // Trigger computers turn
         setTimeout(() => {
             takeTurn(computer, row, col);
         }, 1000);
-    } else {
+    }
+    // Computers turn
+    else {
         setActivePlayer(human);
         human.board.receiveAttack([row, col], human.ships);
         let criticalHit = getCriticalHit();

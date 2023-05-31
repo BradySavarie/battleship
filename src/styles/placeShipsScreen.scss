@@ -1,7 +1,8 @@
 $boardsize: 50vmin;
 $off-white: #f3f3f3;
 $orange: #f76b35;
-$darkblue: #41cce1;
+$darkblue: #1d5861;
+$blue: #41cce1;
 $lightblue: rgba(65, 204, 225, 0.25);
 $green: #00ffae;
 $red: hsl(0, 100%, 50%);
@@ -106,7 +107,7 @@ $red: hsl(0, 100%, 50%);
 
 .cell {
     border: 1px solid $off-white;
-    background-color: $darkblue;
+    background-color: $blue;
 
     &.placementValid {
         background-color: $green;

@@ -66,11 +66,13 @@ export class Gameboard {
     }
 
     randomizeShips(ships: Ship[]) {
+        // clear positioned ships
         for (let i = 0; i < this.boardSize; i++) {
             for (let j = 0; j < this.boardSize; j++) {
                 this.shipPositions[i][j] = null;
             }
         }
+        // while ship is not placed, generate random coordinate and attempt placement
         ships.forEach((ship, index) => {
             let isSuccessful;
 
@@ -90,18 +92,18 @@ export class Gameboard {
 
     receiveAttack(coordinate: number[], ships: Ship[]): boolean {
         const [row, col] = coordinate;
-        // Validate that coordinate has not been previously attacked
+
         if (
             this.attackState[row][col] === 'miss' ||
             this.attackState[row][col] === 'hit'
         ) {
+            // Return false for unsuccessful attack if coordinate has been previously attacked
             return false;
         } else if (this.shipPositions[row][col] === null) {
-            // Update state to miss
+            // Update state to miss if coordinate empty
             this.attackState[row][col] = 'miss';
-            return true;
         } else {
-            // Update state to hit
+            // Register a hit
             let index = this.shipPositions[row][col] as number;
             this.attackState[row][col] = 'hit';
             ships[index].hit();
@@ -112,9 +114,9 @@ export class Gameboard {
             } else {
                 setCriticalHit(false);
             }
-
-            return true;
         }
+        // Return to true to indicate a successful attack
+        return true;
     }
 
     validatePlacement(ship: Ship, row: number, col: number): boolean {
@@ -144,6 +146,7 @@ export class Gameboard {
             if (row + ship.length > this.boardSize) return false;
         }
 
+        // Return true to indicate a valid placement
         return true;
     }
 }

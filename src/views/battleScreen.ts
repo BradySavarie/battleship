@@ -165,6 +165,10 @@ gameBoardContainer.addEventListener('click', (e) => {
         let row = parseInt(targetCell.dataset.row as string);
         let col = parseInt(targetCell.dataset.col as string);
 
+        // Reject event delegation that results in bad row/col values
+        if (Number.isNaN(row) || Number.isNaN(col)) return;
+
+        // Reject clicks during computers turn
         if (activePlayer instanceof Human) {
             takeTurn(activePlayer, row, col);
         }
