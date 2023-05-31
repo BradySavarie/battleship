@@ -91,14 +91,17 @@ export class Gameboard {
     receiveAttack(coordinate: number[], ships: Ship[]): boolean {
         const [row, col] = coordinate;
         // Validate that coordinate has not been previously attacked
-        if (this.attackState[row][col] === 'miss') {
+        if (
+            this.attackState[row][col] === 'miss' ||
+            this.attackState[row][col] === 'hit'
+        ) {
             return false;
         } else if (this.shipPositions[row][col] === null) {
             // Update state to miss
             this.attackState[row][col] = 'miss';
             return true;
-            // Update state to hit
         } else {
+            // Update state to hit
             let index = this.shipPositions[row][col] as number;
             this.attackState[row][col] = 'hit';
             ships[index].hit();

@@ -1,6 +1,10 @@
 // Responsible for handling the general flow of the game.
 import { Human, Computer } from '../models/player';
-import { getCriticalHit, setActivePlayer } from '../models/state';
+import {
+    getCriticalHit,
+    setActivePlayer,
+    setCriticalHit,
+} from '../models/state';
 import {
     buildHumanGameboard,
     renderFleet,
@@ -58,9 +62,30 @@ export function takeTurn(
 ) {
     if (activePlayer instanceof Human) {
         setActivePlayer(computer);
-        computer.board.receiveAttack([row, col], computer.ships);
-        renderAttackState();
-        renderResultMessage(computer.board.attackState[row][col]);
+        let attackSuccess = computer.board.receiveAttack(
+            [row, col],
+            computer.ships
+        );
+        if (!attackSuccess) {
+            setActivePlayer(human);
+            return;
+        }
+        let criticalHit = getCriticalHit();
+        if (criticalHit) {
+            let sunkenShipName = renderSunkenShip(
+                computer.board.shipPositions,
+                computer.ships,
+                row,
+                col
+            );
+            renderResultMessage(
+                computer.board.attackState[row][col],
+                sunkenShipName
+            );
+        } else {
+            renderAttackState();
+            renderResultMessage(computer.board.attackState[row][col]);
+        }
         setTimeout(() => {
             takeTurn(computer, row, col);
         }, 1000);
@@ -87,4 +112,5 @@ export function takeTurn(
             clearResultMessage();
         }, 1000);
     }
+    setCriticalHit(false);
 }

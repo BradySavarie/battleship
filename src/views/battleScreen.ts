@@ -85,40 +85,36 @@ export function renderSunkenShip(
 
     // Select correct cells and update classes
     if (activePlayer instanceof Human) {
-        for (let i = 0; i < 10; i++) {
-            for (let j = 0; j < 10; j++) {
+        for (let i = 0; i < activePlayer.board.boardSize; i++) {
+            for (let j = 0; j < activePlayer.board.boardSize; j++) {
                 if (shipPositions[i][j] === index) {
                     let cells = Array.from(
                         document.querySelectorAll('#humanCell')
                     ) as HTMLDivElement[];
-                    cells.forEach((cell) => {
-                        dataRow = parseInt(cell.dataset.row as string);
-                        dataCol = parseInt(cell.dataset.col as string);
-
-                        if (dataRow === i && dataCol === j) {
-                            cell.classList.remove('hit');
-                            cell.classList.add('isSunk');
-                        }
-                    });
+                    let cell = cells.find(
+                        (cell) =>
+                            parseInt(cell.dataset.row as string) === i &&
+                            parseInt(cell.dataset.col as string) === j
+                    ) as HTMLDivElement;
+                    cell.classList.remove('hit');
+                    cell.classList.add('isSunk');
                 }
             }
         }
     } else {
-        for (let i = 0; i < 10; i++) {
-            for (let j = 0; j < 10; j++) {
+        for (let i = 0; i < activePlayer.board.boardSize; i++) {
+            for (let j = 0; j < activePlayer.board.boardSize; j++) {
                 if (shipPositions[i][j] === index) {
                     let cells = Array.from(
                         document.querySelectorAll('#computerCell')
                     ) as HTMLDivElement[];
-                    cells.forEach((cell) => {
-                        dataRow = parseInt(cell.dataset.row as string);
-                        dataCol = parseInt(cell.dataset.col as string);
-
-                        if (dataRow === i && dataCol === j) {
-                            cell.classList.remove('hit');
-                            cell.classList.add('isSunk');
-                        }
-                    });
+                    let cell = cells.find(
+                        (cell) =>
+                            parseInt(cell.dataset.row as string) === i &&
+                            parseInt(cell.dataset.col as string) === j
+                    ) as HTMLDivElement;
+                    cell.classList.remove('hit');
+                    cell.classList.add('isSunk');
                 }
             }
         }
