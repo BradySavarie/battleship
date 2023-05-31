@@ -3,6 +3,7 @@ import { Human, Computer } from './player';
 
 let activePlayer: Human | Computer;
 let gameStatus: string = 'pregame';
+let criticalHit: boolean;
 
 export function setActivePlayer(player: Human | Computer) {
     activePlayer = player;
@@ -18,4 +19,12 @@ export function setGameStatus(status: string) {
 
 export function getGameStatus() {
     return gameStatus;
+}
+
+export function getCriticalHit() {
+    return criticalHit;
+}
+
+export function setCriticalHit(isCriticalHit: boolean) {
+    criticalHit = isCriticalHit;
 }

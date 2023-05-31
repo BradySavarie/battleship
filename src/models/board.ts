@@ -1,6 +1,7 @@
 /* This module defines a Gameboard class that represents a game board for battleships. It has properties for ship positions and attack state, and includes a method to place a ship on the board. */
 
 import { Ship } from './ship';
+import { getCriticalHit, setCriticalHit } from './state';
 
 export class Gameboard {
     public shipPositions: (null | number)[][];
@@ -101,6 +102,14 @@ export class Gameboard {
             let index = this.shipPositions[row][col] as number;
             this.attackState[row][col] = 'hit';
             ships[index].hit();
+
+            // Update critical hit variable
+            if (ships[index].isSunk()) {
+                setCriticalHit(true);
+            } else {
+                setCriticalHit(false);
+            }
+
             return true;
         }
     }

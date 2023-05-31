@@ -1,6 +1,6 @@
 // Responsible for handling the general flow of the game.
 import { Human, Computer } from '../models/player';
-import { setActivePlayer } from '../models/state';
+import { getCriticalHit, setActivePlayer } from '../models/state';
 import {
     buildHumanGameboard,
     renderFleet,
@@ -9,9 +9,11 @@ import {
 import {
     buildComputerGameboard,
     renderAttackState,
+    renderSunkenShip,
     renderResultMessage,
     clearResultMessage,
 } from '../views/battleScreen';
+import { Ship } from '../models/ship';
 
 let human = new Human();
 let computer = new Computer();
@@ -65,8 +67,22 @@ export function takeTurn(
     } else {
         setActivePlayer(human);
         human.board.receiveAttack([row, col], human.ships);
-        renderAttackState();
-        renderResultMessage(human.board.attackState[row][col]);
+        let criticalHit = getCriticalHit();
+        if (criticalHit) {
+            let sunkenShipName = renderSunkenShip(
+                human.board.shipPositions,
+                human.ships,
+                row,
+                col
+            );
+            renderResultMessage(
+                human.board.attackState[row][col],
+                sunkenShipName
+            );
+        } else {
+            renderAttackState();
+            renderResultMessage(human.board.attackState[row][col]);
+        }
         setTimeout(() => {
             clearResultMessage();
         }, 1000);

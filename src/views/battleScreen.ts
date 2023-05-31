@@ -1,4 +1,5 @@
 import { Human } from '../models/player';
+import { Ship } from '../models/ship';
 import { getActivePlayer } from '../models/state';
 import { takeTurn } from '../controllers/game';
 
@@ -71,20 +72,87 @@ export function renderAttackState() {
     });
 }
 
-export function renderResultMessage(attackState: string | null) {
+export function renderSunkenShip(
+    shipPositions: (number | null)[][],
+    ships: Ship[],
+    row: number,
+    col: number
+) {
+    let dataRow: number;
+    let dataCol: number;
+    let activePlayer = getActivePlayer();
+    let index = shipPositions[row][col];
+
+    // Select correct cells and update classes
+    if (activePlayer instanceof Human) {
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                if (shipPositions[i][j] === index) {
+                    let cells = Array.from(
+                        document.querySelectorAll('#humanCell')
+                    ) as HTMLDivElement[];
+                    cells.forEach((cell) => {
+                        dataRow = parseInt(cell.dataset.row as string);
+                        dataCol = parseInt(cell.dataset.col as string);
+
+                        if (dataRow === i && dataCol === j) {
+                            cell.classList.remove('hit');
+                            cell.classList.add('isSunk');
+                        }
+                    });
+                }
+            }
+        }
+    } else {
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                if (shipPositions[i][j] === index) {
+                    let cells = Array.from(
+                        document.querySelectorAll('#computerCell')
+                    ) as HTMLDivElement[];
+                    cells.forEach((cell) => {
+                        dataRow = parseInt(cell.dataset.row as string);
+                        dataCol = parseInt(cell.dataset.col as string);
+
+                        if (dataRow === i && dataCol === j) {
+                            cell.classList.remove('hit');
+                            cell.classList.add('isSunk');
+                        }
+                    });
+                }
+            }
+        }
+    }
+    if (index !== null) {
+        return ships[index].name;
+    }
+}
+
+export function renderResultMessage(
+    attackState: string | null,
+    shipName: string = 'none'
+) {
     let activePlayer = getActivePlayer();
 
     if (activePlayer instanceof Human) {
-        if (attackState === 'miss') {
-            statusMessage.textContent = 'The computer missed!';
+        if (shipName === 'none') {
+            if (attackState === 'miss') {
+                statusMessage.textContent = 'The computer missed!';
+            } else {
+                statusMessage.textContent = `The computer hit your ship!`;
+            }
         } else {
-            statusMessage.textContent = 'The computer hit a ship!';
+            statusMessage.textContent = `The computer sunk your ${shipName}!`;
         }
     } else {
-        if (attackState === 'miss') {
-            statusMessage.textContent = 'You missed!';
+        if (shipName === 'none') {
+            if (attackState === 'miss') {
+                statusMessage.textContent = 'You missed!';
+            } else {
+                statusMessage.textContent = 'You hit a ship!';
+            }
         } else {
-            statusMessage.textContent = 'You hit a ship!';
+            statusMessage.textContent = `You sunk the computers ${shipName}!`;
         }
     }
 }

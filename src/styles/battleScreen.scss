@@ -11,4 +11,7 @@
     &.hit {
         background-color: $red;
     }
+    &.isSunk {
+        background-color: black;
+    }
 }
