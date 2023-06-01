@@ -18,6 +18,7 @@ import {
     clearResultMessage,
 } from '../views/battleScreen';
 import { Ship } from '../models/ship';
+import { setGameStatus } from '../models/state';
 
 let human = new Human();
 let computer = new Computer();
@@ -93,10 +94,19 @@ export function takeTurn(
             renderAttackState();
             renderResultMessage(computer.board.attackState[row][col]);
         }
-        // Trigger computers turn
-        setTimeout(() => {
-            takeTurn(computer, row, col);
-        }, 1000);
+
+        // Check if end game conditions are met
+        let gameOver = isGameOver(computer.ships);
+
+        if (gameOver) {
+            console.log('end game');
+            // renderEndGameModal()
+        } else {
+            // Trigger computers turn
+            setTimeout(() => {
+                takeTurn(computer, row, col);
+            }, 1000);
+        }
     }
     // Computers turn
     else {
@@ -118,9 +128,33 @@ export function takeTurn(
             renderAttackState();
             renderResultMessage(human.board.attackState[row][col]);
         }
-        setTimeout(() => {
-            clearResultMessage();
-        }, 1000);
+        // Check if end game conditions are met
+        let gameOver = isGameOver(human.ships);
+
+        if (gameOver) {
+            console.log('end game');
+            // renderEndGameModal()
+        } else {
+            setTimeout(() => {
+                clearResultMessage();
+            }, 1000);
+        }
     }
     setCriticalHit(false);
+}
+
+export function isGameOver(ships: Ship[]): boolean {
+    let gameOver = true;
+    ships.forEach((ship) => {
+        if (!ship.isSunk()) {
+            gameOver = false;
+            return;
+        }
+    });
+    if (gameOver) {
+        setGameStatus('gameOver');
+        return true;
+    } else {
+        return false;
+    }
 }
