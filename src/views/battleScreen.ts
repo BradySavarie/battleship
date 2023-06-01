@@ -1,7 +1,8 @@
-import { Human } from '../models/player';
+import { Human, Computer } from '../models/player';
 import { Ship } from '../models/ship';
 import { getActivePlayer } from '../models/state';
 import { takeTurn } from '../controllers/game';
+import { doc } from 'prettier';
 
 let gameBoardContainer = document.querySelector(
     '.main__placement-controls'
@@ -155,6 +156,21 @@ export function renderResultMessage(
 
 export function clearResultMessage() {
     statusMessage.textContent = '';
+}
+
+export function renderEndGameModal(winner: Human | Computer) {
+    let overlay = document.getElementById('overlay') as HTMLElement;
+    let endGameModal = document.getElementById('end-game-modal') as HTMLElement;
+    let header = document.getElementById(
+        'end-game-modal__header'
+    ) as HTMLElement;
+    if (winner instanceof Human) {
+        header.textContent = 'Victory!';
+    } else {
+        header.textContent = 'Defeat!';
+    }
+    endGameModal.style.display = 'flex';
+    overlay.style.display = 'flex';
 }
 
 gameBoardContainer.addEventListener('click', (e) => {

@@ -16,6 +16,7 @@ import {
     renderSunkenShip,
     renderResultMessage,
     clearResultMessage,
+    renderEndGameModal,
 } from '../views/battleScreen';
 import { Ship } from '../models/ship';
 import { setGameStatus } from '../models/state';
@@ -99,8 +100,7 @@ export function takeTurn(
         let gameOver = isGameOver(computer.ships);
 
         if (gameOver) {
-            console.log('end game');
-            // renderEndGameModal()
+            renderEndGameModal(human);
         } else {
             // Trigger computers turn
             setTimeout(() => {
@@ -132,8 +132,7 @@ export function takeTurn(
         let gameOver = isGameOver(human.ships);
 
         if (gameOver) {
-            console.log('end game');
-            // renderEndGameModal()
+            renderEndGameModal(computer);
         } else {
             setTimeout(() => {
                 clearResultMessage();
