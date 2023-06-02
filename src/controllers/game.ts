@@ -164,6 +164,7 @@ export function generateComputersMove(human: Human) {
     let coordinate: Number[];
     if (targetShip === false) {
         coordinate = human.board.generateRandomCoordinate();
+        return coordinate;
     }
     // findShipsCoordinates
     // findValidAdjacentCoordinate
