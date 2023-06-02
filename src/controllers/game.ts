@@ -161,8 +161,10 @@ export function isGameOver(ships: Ship[]): boolean {
 
 export function generateComputersMove(human: Human) {
     let targetShip = human.board.chooseShipToAttack(human.ships);
-    console.log(targetShip);
-    // if chooseShipToAttack returns false, call generateRandomCoordinate
+    let coordinate: Number[];
+    if (targetShip === false) {
+        coordinate = human.board.generateRandomCoordinate();
+    }
     // findShipsCoordinates
     // findValidAdjacentCoordinate
 }

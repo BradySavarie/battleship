@@ -140,4 +140,14 @@ describe('tests chooseShipToAttack function', () => {
     });
 });
 
-describe('tests generateRandomCoordinate function', () => {});
+describe('tests generateRandomCoordinate function', () => {
+    it('returns valid random coordinate pair', () => {
+        let human = new Human();
+        let coordinate = human.board.generateRandomCoordinate();
+        expect(coordinate).toEqual(
+            expect.arrayContaining([expect.any(Number), expect.any(Number)])
+        );
+        expect(coordinate[0]).toBeLessThan(10);
+        expect(coordinate[1]).toBeLessThan(10);
+    });
+});

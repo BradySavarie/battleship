@@ -163,4 +163,10 @@ export class Gameboard {
 
         return targetShip;
     }
+
+    generateRandomCoordinate() {
+        let row = Math.floor(Math.random() * 10);
+        let col = Math.floor(Math.random() * 10);
+        return [row, col];
+    }
 }
