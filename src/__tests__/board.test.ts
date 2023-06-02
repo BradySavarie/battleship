@@ -1,4 +1,4 @@
-import { Gameboard } from '../models/board';
+import {} from '../models/board';
 import { Human } from '../models/player';
 
 describe('tests placeShips method', () => {
@@ -27,9 +27,7 @@ describe('tests placeShips method', () => {
             ])
         ).toBe(false);
     });
-});
 
-describe('tests placeShips method', () => {
     it('Checks if a ship collides with another ship vertically', () => {
         // Manually insert a test ship of length 3 vertically
         let testPlayer = new Human();
@@ -56,9 +54,7 @@ describe('tests placeShips method', () => {
             ])
         ).toBe(false);
     });
-});
 
-describe('tests placeShips method', () => {
     it('Checks if a ship extends past the edge horizontally', () => {
         // Create a player to test a ship with
         let testPlayer = new Human();
@@ -72,9 +68,7 @@ describe('tests placeShips method', () => {
             )
         ).toBe(false);
     });
-});
 
-describe('tests placeShips method', () => {
     it('Checks if a ship extends past the edge vertically', () => {
         // Create a player to test a ship with
         let testPlayer = new Human();
@@ -98,9 +92,7 @@ describe('tests rotateShip method', () => {
         testPlayer.board.rotateShip(testPlayer.ships[0], 0, 0, 0);
         expect(testPlayer.board.shipPositions[4][0]).toBe(0);
     });
-});
 
-describe('tests rotateShip method', () => {
     it('Checks if invalid rotation is handled', () => {
         let testPlayer = new Human();
         testPlayer.board.placeShip(testPlayer.ships[0], 0, [6, 0]);
@@ -116,9 +108,7 @@ describe('tests receiveAttack method', () => {
         testPlayer.board.receiveAttack([0, 0], testPlayer.ships);
         expect(testPlayer.board.attackState[0][0]).toBe('hit');
     });
-});
 
-describe('tests receiveAttack method', () => {
     it('Checks if method returns false when coordinate has already been attacked', () => {
         let testPlayer = new Human();
         testPlayer.board.receiveAttack([0, 0], testPlayer.ships);
@@ -126,9 +116,7 @@ describe('tests receiveAttack method', () => {
             false
         );
     });
-});
 
-describe('tests receiveAttack method', () => {
     it('Checks if ships hit property is updated', () => {
         let testPlayer = new Human();
         testPlayer.board.placeShip(testPlayer.ships[0], 0, [0, 0]);
@@ -136,3 +124,20 @@ describe('tests receiveAttack method', () => {
         expect(testPlayer.ships[0].hits).toEqual(1);
     });
 });
+
+describe('tests chooseShipToAttack function', () => {
+    it('selects first damaged ship it encounters', () => {
+        let human = new Human();
+        human.ships[1].hit();
+        let ship = human.board.chooseShipToAttack(human.ships);
+        expect(ship).toBe(human.ships[1]);
+    });
+
+    it('returns false if no damaged ship is found', () => {
+        let human = new Human();
+        let ship = human.board.chooseShipToAttack(human.ships);
+        expect(ship).toEqual(false);
+    });
+});
+
+describe('tests generateRandomCoordinate function', () => {});

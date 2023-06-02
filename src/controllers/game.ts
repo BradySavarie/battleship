@@ -111,6 +111,7 @@ export function takeTurn(
     // Computers turn
     else {
         setActivePlayer(human);
+        generateComputersMove(human);
         human.board.receiveAttack([row, col], human.ships);
         let criticalHit = getCriticalHit();
         if (criticalHit) {
@@ -156,4 +157,12 @@ export function isGameOver(ships: Ship[]): boolean {
     } else {
         return false;
     }
+}
+
+export function generateComputersMove(human: Human) {
+    let targetShip = human.board.chooseShipToAttack(human.ships);
+    console.log(targetShip);
+    // if chooseShipToAttack returns false, call generateRandomCoordinate
+    // findShipsCoordinates
+    // findValidAdjacentCoordinate
 }

@@ -1,3 +1,4 @@
+import { generateComputersMove } from '../controllers/game';
 import { Human } from '../models/player';
 import { Ship } from '../models/ship';
 
@@ -28,5 +29,21 @@ describe('tests isGameOver function', () => {
         });
 
         expect(isGameOverMock(testPlayer.ships)).toEqual(true);
+    });
+});
+
+describe('tests generateComputersMove function', () => {
+    let human = new Human();
+
+    let generateComputersMoveMock = jest.fn((human) => {
+        // Update this once helper functions are written
+        return [1, 2];
+    });
+
+    it('returns an array of two numbers', () => {
+        let array = generateComputersMoveMock(human);
+        expect(array).toEqual(
+            expect.arrayContaining([expect.any(Number), expect.any(Number)])
+        );
     });
 });

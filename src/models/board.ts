@@ -149,4 +149,18 @@ export class Gameboard {
         // Return true to indicate a valid placement
         return true;
     }
+
+    chooseShipToAttack(ships: Ship[]) {
+        let targetShip: Ship | boolean = false;
+
+        for (let ship of ships) {
+            let isSunk = ship.isSunk();
+            if (!isSunk && ship.hits > 0) {
+                targetShip = ship;
+                break;
+            }
+        }
+
+        return targetShip;
+    }
 }

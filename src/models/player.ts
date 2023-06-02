@@ -6,11 +6,6 @@ import { Gameboard } from './board';
 interface Player {
     board: Gameboard;
     ships: Ship[];
-    takeTurn(coordinate: number[]): void;
-}
-
-interface ComputerPlayer extends Player {
-    takeTurn(): void;
 }
 
 export class Human implements Player {
@@ -35,11 +30,9 @@ export class Human implements Player {
             this.ships.push(ship);
         }
     }
-
-    takeTurn(coordinate: number[]) {}
 }
 
-export class Computer implements ComputerPlayer {
+export class Computer {
     board: Gameboard = new Gameboard();
     ships: Ship[] = [];
 
@@ -61,6 +54,4 @@ export class Computer implements ComputerPlayer {
             this.ships.push(ship);
         }
     }
-
-    takeTurn() {}
 }
