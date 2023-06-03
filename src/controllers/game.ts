@@ -112,10 +112,17 @@ export function takeTurn(
     else {
         setActivePlayer(human);
         let attackSuccess = false;
+        let coordinate: number[] = [];
+        // send attack
         while (!attackSuccess) {
-            let coordinate = generateComputersMove(human);
+            coordinate = generateComputersMove(human);
             attackSuccess = human.board.receiveAttack(coordinate, human.ships);
         }
+        // update attacked row and col
+        row = coordinate[0];
+        col = coordinate[1];
+
+        // render attack results
         let criticalHit = getCriticalHit();
         if (criticalHit) {
             let sunkenShipName = renderSunkenShip(
@@ -132,6 +139,7 @@ export function takeTurn(
             renderAttackState();
             renderResultMessage(human.board.attackState[row][col]);
         }
+
         // Check if end game conditions are met
         let gameOver = isGameOver(human.ships);
 
@@ -173,6 +181,6 @@ export function generateComputersMove(human: Human): number[] {
         targetShip,
         human.ships
     );
-    console.log(coordinates);
-    // findValidAdjacentCoordinate
+    let targetCoordinate = human.board.findValidAdjacentCoordinate(coordinates);
+    return targetCoordinate;
 }

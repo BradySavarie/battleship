@@ -152,7 +152,7 @@ describe('tests generateRandomCoordinate function', () => {
     });
 });
 
-describe('tests findDamagedShipsCoordinates', () => {
+describe('tests findDamagedShipsCoordinates function', () => {
     it('returns an array of coordinate pairs', () => {
         let human = new Human();
         human.board.randomizeShips(human.ships);
@@ -174,5 +174,24 @@ describe('tests findDamagedShipsCoordinates', () => {
             );
         }
         expect(isCoordinateArray(coordinates)).toBe(true);
+    });
+});
+
+describe('tests findAdjacentCoordinates function', () => {
+    it('returns a valid coordinate pair', () => {
+        let human = new Human();
+        human.board.randomizeShips(human.ships);
+        human.ships[0].hit();
+        let coordinates = human.board.findDamagedShipsCoordinates(
+            human.ships[0],
+            human.ships
+        );
+        let targetCoordinate =
+            human.board.findValidAdjacentCoordinate(coordinates);
+        expect(targetCoordinate).toEqual(
+            expect.arrayContaining([expect.any(Number), expect.any(Number)])
+        );
+        expect(targetCoordinate[0]).toBeLessThan(10);
+        expect(targetCoordinate[1]).toBeLessThan(10);
     });
 });
