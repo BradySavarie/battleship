@@ -150,8 +150,8 @@ export class Gameboard {
         return true;
     }
 
-    chooseShipToAttack(ships: Ship[]) {
-        let targetShip: Ship | boolean = false;
+    findDamagedShip(ships: Ship[]) {
+        let targetShip: Ship | null = null;
 
         for (let ship of ships) {
             let isSunk = ship.isSunk();
@@ -168,5 +168,18 @@ export class Gameboard {
         let row = Math.floor(Math.random() * 10);
         let col = Math.floor(Math.random() * 10);
         return [row, col];
+    }
+
+    findDamagedShipsCoordinates(targetShip: Ship, ships: Ship[]): number[][] {
+        let coordinates: number[][] = [];
+        let index = ships.findIndex((ship) => ship === targetShip);
+        for (let row = 0; row < this.boardSize; row++) {
+            for (let col = 0; col < this.boardSize; col++) {
+                if (this.shipPositions[row][col] === index) {
+                    coordinates.push([row, col]);
+                }
+            }
+        }
+        return coordinates;
     }
 }

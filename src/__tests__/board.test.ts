@@ -125,18 +125,18 @@ describe('tests receiveAttack method', () => {
     });
 });
 
-describe('tests chooseShipToAttack function', () => {
+describe('tests findDamagedShip function', () => {
     it('selects first damaged ship it encounters', () => {
         let human = new Human();
         human.ships[1].hit();
-        let ship = human.board.chooseShipToAttack(human.ships);
+        let ship = human.board.findDamagedShip(human.ships);
         expect(ship).toBe(human.ships[1]);
     });
 
     it('returns false if no damaged ship is found', () => {
         let human = new Human();
-        let ship = human.board.chooseShipToAttack(human.ships);
-        expect(ship).toEqual(false);
+        let ship = human.board.findDamagedShip(human.ships);
+        expect(ship).toBeNull;
     });
 });
 
@@ -149,5 +149,30 @@ describe('tests generateRandomCoordinate function', () => {
         );
         expect(coordinate[0]).toBeLessThan(10);
         expect(coordinate[1]).toBeLessThan(10);
+    });
+});
+
+describe('tests findDamagedShipsCoordinates', () => {
+    it('returns an array of coordinate pairs', () => {
+        let human = new Human();
+        human.board.randomizeShips(human.ships);
+        human.ships[0].hit();
+        let coordinates = human.board.findDamagedShipsCoordinates(
+            human.ships[0],
+            human.ships
+        );
+        function isCoordinateArray(coordinates: number[][]) {
+            if (!Array.isArray(coordinates) || coordinates.length === 0) {
+                return false;
+            }
+
+            return coordinates.every(
+                (coord) =>
+                    Array.isArray(coord) &&
+                    coord.length === 2 &&
+                    coord.every((num) => typeof num === 'number')
+            );
+        }
+        expect(isCoordinateArray(coordinates)).toBe(true);
     });
 });
