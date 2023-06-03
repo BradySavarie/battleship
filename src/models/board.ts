@@ -186,43 +186,37 @@ export class Gameboard {
     findValidAdjacentCoordinate(coordinates: number[][]): number[] {
         let targetCoordinate: number[] = [];
         let validCoor: boolean = false;
+        // while an unattacked adjacent coordinate has not been selected
         while (validCoor === false) {
             for (let coor of coordinates) {
                 let [row, col] = coor;
-                if (
-                    this.attackState[row][col] === 'hit' &&
-                    coor !== targetCoordinate
-                ) {
-                    targetCoordinate = coor;
-                    break;
-                }
-            }
-
-            let [row, col] = targetCoordinate;
-
-            // create adjacent coordinates array
-            let adjacentCoordinates = [
-                [row, col + 1],
-                [row, col - 1],
-                [row + 1, col],
-                [row - 1, col],
-            ];
-
-            // select random adjacent coordinate
-            let randomIndex = Math.floor(Math.random() * 4);
-            let [adjRow, adjCol] = adjacentCoordinates[randomIndex];
-            // if adjacent position is on the board
-            if (
-                adjRow >= 0 &&
-                adjRow < this.boardSize &&
-                adjCol >= 0 &&
-                adjCol < this.boardSize
-            ) {
-                // if position has not been attacked
-                if (this.attackState[adjRow][adjCol] === null) {
-                    // update targetCoordinate and set as valid
-                    targetCoordinate = [adjRow, adjCol];
-                    validCoor = true;
+                // If coordinate has been hit, select it
+                if (this.attackState[row][col] === 'hit') {
+                    // store adjacent coordinates
+                    let adjacentCoordinates = [
+                        [row, col + 1],
+                        [row, col - 1],
+                        [row + 1, col],
+                        [row - 1, col],
+                    ];
+                    // select random adjacent coordinate
+                    let randomIndex = Math.floor(Math.random() * 4);
+                    let [adjRow, adjCol] = adjacentCoordinates[randomIndex];
+                    // if coordinate is on the board
+                    if (
+                        adjRow >= 0 &&
+                        adjRow < this.boardSize &&
+                        adjCol >= 0 &&
+                        adjCol < this.boardSize
+                    ) {
+                        // and if position has not been attacked
+                        if (this.attackState[adjRow][adjCol] === null) {
+                            // update targetCoordinate and set as valid
+                            targetCoordinate = [adjRow, adjCol];
+                            validCoor = true;
+                            break;
+                        }
+                    }
                 }
             }
         }
