@@ -10,3 +10,13 @@ Live Link: https://bradysavarie.github.io/battleship/
 
 <hr>
 
+This application is a part of The Odin Projects Full-Stack Javascript curriculum and was developed with the purpose of integrating unit testing into my workflow. The main challenges I faced were learning how to use the HTML drag & drop API, apply TDD methodologies, adopt static typing, and implement the MVC architectural design pattern.
+
+<h3>Built With:</h3>
+
+<ul>
+  <li>Typescript
+  <li>SASS
+  <li>Jest
+  <li>Webpack
+ </ul>
