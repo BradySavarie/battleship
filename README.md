@@ -6,7 +6,7 @@
 
 <em>This Battleship application lets you strategically place 5 ships on a grid and take turns with an AI opponent to try to sink eachothers fleet. It features a user-friendly drag and drop interface that allows you to click a ship once placed to rotate it. Alternatively, you can click the randomize button to generate your ships positions at random.</em>
 
-Live Link: bradysavarie.github.io/battleship/
+Live Link: https://bradysavarie.github.io/battleship/
 
 <hr>
 
